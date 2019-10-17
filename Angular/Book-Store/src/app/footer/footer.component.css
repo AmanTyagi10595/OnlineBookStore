@@ -1,0 +1,11 @@
+.page-footer {
+  background-color: #cec9c9;
+}
+.footer-copyright {
+  background-color: rebeccapurple;
+}
+.list-inline-item a {
+  border-color: #444343;
+  border-width: 2px;
+  border-radius: 21px;
+}

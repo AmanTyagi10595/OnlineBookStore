@@ -1,0 +1,40 @@
+<!-- <p *ngFor="let item of bookInfo | keyvalue">
+  Key: <b>{{item.key}}</b> and Value: <b>{{item.value}}</b>
+</p> -->
+<div class="addToCart">
+  <div class="container">
+    <div class=row>
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <div class="image">
+            <div class="imgView"> <img src="../../assets/book.jpg" alt="img"></div>
+            <div *ngIf="bookInfo">
+              <p>
+                Price: <span>{{bookInfo.price }}</span> <br />
+                Title: <span>{{bookInfo.title }}</span> <br />
+                ID: <span>{{bookInfo.code }}</span> <br />
+                Details: <span>{{bookInfo.description }}</span> <br />
+                Author: <span>{{bookInfo.author }}</span> <br />
+                Genre: <span>{{bookInfo.genre }}</span> <br />
+                Publisher: <span>{{bookInfo.publisher }}</span> <br />
+              </p>
+
+            </div>
+            <div class="value-button" id="decrease" value="Decrease Value" (click)="decrease()">-</div>
+            <input type="number" id="number" value="0" [(ngModel)]="cartValue" min="1" (keyup)="validate()" />
+            <div class="value-button" id="increase" value="Increase Value" (click)="increase()">+</div>
+            <div *ngIf="message">
+              {{message}}
+            </div>
+            <div>
+              <a [routerLink]="['/payment']" [queryParams]="bookInfo"><button type="button" class="btn btn-primary">Place Order</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

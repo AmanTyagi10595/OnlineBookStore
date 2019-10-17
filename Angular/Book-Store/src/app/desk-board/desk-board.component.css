@@ -1,0 +1,90 @@
+.imgView img {
+  width: 180px;
+  height: 220px;
+  /* background: url("../../assets/book.jpg"); */
+  background-size: cover;
+  border-radius: 5px;
+}
+.image {
+  text-align: center;
+  /* border: 1px solid gray; */
+  padding-top: 7px;
+  padding-bottom: 6px;
+  border-radius: 4px;
+}
+.image:hover {
+  -webkit-box-shadow: 1px -1px 16px -1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 1px -1px 16px -1px rgba(0, 0, 0, 0.75);
+  box-shadow: 1px -1px 16px -1px rgba(0, 0, 0, 0.75);
+}
+#bookBlock {
+  padding-top: 13px;
+  padding-bottom: 12px;
+}
+._3ycxrs ._3cto0P ._3RkJty {
+  width: 120px;
+  text-align: center;
+  display: inline-block;
+}
+._3md1dr {
+  /* display: -webkit-flex; */
+  line-height: 0.5;
+  display: -ms-flexbox;
+  padding-top: 2px;
+  color: #212121;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+._3md1dr .wNrY5O:disabled {
+  color: #c2c2c2;
+  border-color: #e0e0e0;
+  cursor: auto;
+}
+._3md1dr .wNrY5O {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(#fff, #f9f9f9);
+  display: inline-block;
+  border: 1px solid #c2c2c2;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 50%;
+  padding-top: 1px;
+  line-height: 1;
+}
+._3md1dr ._2zH4zg {
+  display: inline-block;
+  padding: 3px 6px;
+  width: calc(100% - 60px);
+  height: 100%;
+  width: 46px;
+  height: 28px;
+  border-radius: 2px;
+  background-color: #fff;
+  border: 1px solid #c2c2c2;
+  margin: 0 9px;
+  box-sizing: border-box;
+}
+._3md1dr ._2zH4zg ._2csFM9 {
+  border: none;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  vertical-align: middle;
+  text-align: center;
+}
+/* .deskBord {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+@media only screen and (max-width: 300px) {
+  .deskBord {
+    grid-template-columns: auto;
+  }
+}
+
+.deskBord > div {
+  border: 1px solid #ccc;
+} */

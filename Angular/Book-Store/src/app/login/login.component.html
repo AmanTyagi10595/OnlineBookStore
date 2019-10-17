@@ -1,0 +1,25 @@
+<form action="action_page.php" *ngIf="!isLogged">
+  <!-- <div class="imgcontainer">
+    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+  </div> -->
+
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="uname" [(ngModel)]="obj.email" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" [(ngModel)]="obj.password" required>
+
+    <button type="submit" (click)="loginSubmit(obj)">Login</button>
+    <p style="color: red;"><strong>{{result}}</strong></p>
+    <label>
+      <input type="checkbox" name="remember"> Remember me
+    </label>
+  </div>
+
+  <div class="container" style="background-color:#f1f1f1">
+    <!-- <button type="button" class="cancelbtn">Cancel</button> -->
+    <span class="psw">ForgotPass <a [routerLink]="['/forgotPass']" class="backbtnlgn">Forgot password</a></span>
+    <div class="psw">SignUp<a [routerLink]="['/register']" class="backbtnlgn">SignUp</a></div>
+  </div>
+</form>

@@ -1,0 +1,21 @@
+<form action="action_page.php">
+  <!-- <div class="imgcontainer">
+    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+  </div> -->
+
+  <div class="container">
+
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Email" name="uname" [(ngModel)]="obj.email" required>
+
+    <button type="submit" (click)="forgotPass(obj)">Submit</button>
+    <p><strong>{{result}}</strong></p>
+
+  </div>
+
+  <div class="container" style="background-color:#f1f1f1">
+    <button type="button" class="cancelbtn"><a [routerLink]="['/login']" class="backbtnlgn">=></a>Cancel</button>
+
+    <span class="psw">Loging page <a [routerLink]="['/login']" class="backbtnlgn">Back to Login Page</a></span>
+  </div>
+</form>

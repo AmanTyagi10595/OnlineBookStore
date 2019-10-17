@@ -1,0 +1,31 @@
+ALTER TABLE newinventory.tbl_sysuser DROP COLUMN TimeLinkSent;
+	
+UPDATE `newinventory`.`tbl_sysuser` SET `LincStatus`='1' WHERE `sysUser_ID`='43242';
+query: `Update tbl_sysuser set password=${req.body.newPassword} where sysUser_ID = ${req.body.urlsyid};`
+query: `Update tbl_sysuser set LincStatus='1' where sysUser_ID = ${sysUserid};`
+
+UPDATE `newinventory`.`tbl_sysuser` SET `TimeLinkSent`='2019-09-19 19:25:34', `LincStatus`='1', `TimeChngPass`='' WHERE `sysUser_ID`='50013';
+time
+
+9999-12-31 23:59:59
+
+2019-09-19 19:40:20
+
+
+
+ALTER newinventory.tbl_sysuser ALTER TimeChngPass Timestamp;
+DROP COLUMN column_name;
+
+SELECT LincStatus FROM newinventory.tbl_sysuser where sysUser_ID = 43242;
+
+query: `SELECT LincStatus FROM tbl_sysuser where sysUser_ID = ${sysUserid};`
+query: `Update tbl_sysuser set password=${req.body.newPassword} where sysUser_ID = ${req.body.urlsyid};`
+'2016-09-20 09:34:00'
+2019-09-20 11:03:29
+2019-09-20 11:17:40
+
+git remote set-url origin git@github.com:AmanTyagi10595/Testing.git
+
+
+
+Worked on Update password by Ejs page, Status: Complete, working fine

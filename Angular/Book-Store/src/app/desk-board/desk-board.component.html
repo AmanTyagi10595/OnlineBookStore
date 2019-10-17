@@ -1,0 +1,54 @@
+<!-- <div class="deskBord">
+    <div>abck</div>
+    <div>abck</div>
+    <div>abck</div>
+  </div> -->
+
+
+<div class="deskBord">
+  <div class="container">
+    <div class=row>
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-4" id="bookBlock" *ngFor="let data of datas" routerLink="/bookDetail/{{data._id}}">
+            <div class="image">
+              <div class="imgView"> <img src="../../assets/book.jpg" alt="img"></div>
+              <div>
+                <p>
+                  Price: <span>{{data.price }}</span> <br />
+                  Title: <span>{{data.title }}</span> <br />
+                  ID: <span>{{data.code }}</span> <br />
+                  Details: <span>{{data.description }}</span> <br />
+                </p>
+
+              </div>
+              <!-- <button type="submit" (click)="deskboardBook()">Add to cart</button>
+              <div class="_3md1dr">
+                <button class="wNrY5O" disabled=""> – </button>
+                <div class="_2zH4zg">
+                  <input type="text" value="1" class="_2csFM9">
+                </div>
+                <button class="wNrY5O"> + </button>
+              </div> -->
+            </div>
+          </div>
+          <!-- <div class="col-md-4">
+            <div class="image">
+              <div class="imgView"> <img src="../../assets/book.jpg" alt="img"></div>
+              <div>
+                <p>Book Name:fatter<span>price:20</span> <br />
+                  details <br />
+                  star:</p>
+
+              </div>
+              <button class="primary">Add to card</button>
+              <button type="submit" (click)="deskboardBook()">Update</button>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
