@@ -38,4 +38,7 @@ export class AuthServiceService {
   addToCartApi(obj) {
     return this.http.post(`${this.url}user/addToCart`, obj);
   }
+  fetchCartBook(UserId) {
+    return this.http.post(`${this.url}user/fetchCartBook`, { UserId });
+  }
 }

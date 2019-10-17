@@ -32,7 +32,7 @@ export class BookDetailComponent implements OnInit {
       "user": user
     };
     if (user) {
-      console.log(dataToSend, "data sending to Backend Apis");
+      // console.log(dataToSend, "data sending to Backend Apis");
       this.service.addToCartApi(dataToSend).subscribe((data) => {
         console.log("Book added in the cart", data);
       }, (error) => {

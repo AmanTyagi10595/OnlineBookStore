@@ -506,6 +506,7 @@ router.get("/admine/findParticularBooks", function (req, res) {
 // });
 router.post("/user/addToCart", function (req, res) {
   // console.log(req.body, "datatatattatatatatatattatata");
+  let flag = 0;
   let saveBook = {
     book_count: req.body.book.count,
     book_price: req.body.book.price,
@@ -515,14 +516,26 @@ router.post("/user/addToCart", function (req, res) {
   }
   cart.findOne({ "UserId": req.body.user._id }).then((data) => {
     if (data) {
-      cart.findOneAndUpdate({ "UserId": req.body.user._id }, { "$push": { "book": saveBook } },
-        { "new": true }).then((data) => {
-          console.log("book updated in cart");
-          res.status(200).send(data);
-        }).catch((err) => {
-          console.log(err);
-          res.status(500).send(err);
-        })
+      data.book.forEach((result) => {
+        if (result._id == req.body.book._id) {
+          console.log("Book already in your cart");
+          flag = 1;
+          return;
+        }
+      });
+      setTimeout(function () {
+        if (flag == 0) {
+          console.log("inside addNewBookInCart function");
+          cart.findOneAndUpdate({ "UserId": req.body.user._id }, { "$push": { "book": saveBook } },
+            { "new": true }).then((data) => {
+              console.log("book updated in cart");
+              res.status(200).send(data);
+            }).catch((err) => {
+              console.log(err);
+              res.status(500).send(err);
+            });
+        }
+      }, 1000);
     }
     else {
       const book = {
@@ -549,6 +562,17 @@ router.post("/user/addToCart", function (req, res) {
     }
   });
 
+});
+
+//*****************Api to show total book in the cart *************/
+router.post("/user/fetchCartBook", function (req, res) {
+  console.log(req.body, "fetchCartBook api run");
+  cart.find({ "UserId": req.body.UserId }).then((cartBooks) => {
+    // console.log(JSON.stringify(cartBooks[0]), "data to sent to front end")
+    res.status(200).send(cartBooks[0]);
+  }).catch((err) => {
+    res.status(200).send(err);
+  });
 });
 
 //*****************Api to find total cost in the cart ************/

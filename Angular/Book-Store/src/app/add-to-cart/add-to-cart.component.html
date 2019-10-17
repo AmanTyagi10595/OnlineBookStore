@@ -7,32 +7,33 @@
       <div class="col-md-3">
       </div>
       <div class="col-md-9">
-        <div class="row">
-          <div class="image">
-            <div class="imgView"> <img src="../../assets/book.jpg" alt="img"></div>
-            <div *ngIf="bookInfo">
+        <div class="row" *ngIf="fetchCartBook">
+          <div class="col-md-4" id="bookBlock" *ngFor="let book of fetchedCartBook">
+            <div class="image">
+              <div class="imgView"> <img src="https://via.placeholder.com/150" alt="img"></div>
               <p>
-                Price: <span>{{bookInfo.price }}</span> <br />
-                Title: <span>{{bookInfo.title }}</span> <br />
-                ID: <span>{{bookInfo.code }}</span> <br />
-                Details: <span>{{bookInfo.description }}</span> <br />
-                Author: <span>{{bookInfo.author }}</span> <br />
-                Genre: <span>{{bookInfo.genre }}</span> <br />
-                Publisher: <span>{{bookInfo.publisher }}</span> <br />
+                Price: <span>{{book.book_price }}</span> <br />
+                Title: <span>{{book.book_title }}</span> <br />
+                Code: <span>{{book.book_code }}</span> <br />
               </p>
-
-            </div>
-            <div class="value-button" id="decrease" value="Decrease Value" (click)="decrease()">-</div>
-            <input type="number" id="number" value="0" [(ngModel)]="cartValue" min="1" (keyup)="validate()" />
-            <div class="value-button" id="increase" value="Increase Value" (click)="increase()">+</div>
-            <div *ngIf="message">
-              {{message}}
-            </div>
-            <div>
-              <a [routerLink]="['/payment']" [queryParams]="bookInfo"><button type="button" class="btn btn-primary">Place Order</button>
-              </a>
+              <div class="value-button" id="decrease" value="Decrease Value" (click)="decrease(book._id)">-</div>
+              <input type="number" id="number" value="0" [(ngModel)]="book.val" min="1" (keyup)="validate($event,book._id)" />
+              <div class="value-button" id="increase" value="Increase Value" (click)="increase(book._id)">+</div>
+              <div *ngIf="message">
+                {{message}}
+              </div>
+              <div>
+                ₹{{book.totalAmount}}
+              </div>
+              <div>
+                <button type=" button" class="btn btn-primary">Remove</button>
+              </div>
             </div>
           </div>
+        </div>
+        <div>
+          <a [routerLink]="['/payment']" [queryParams]="bookInfo"><button type="button" class="btn btn-primary">Place Order</button>
+          </a>
         </div>
       </div>
     </div>
