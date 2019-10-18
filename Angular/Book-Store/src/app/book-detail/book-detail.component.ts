@@ -1,6 +1,6 @@
 import { AuthServiceService } from './../services/auth-service.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -12,6 +12,7 @@ export class BookDetailComponent implements OnInit {
   bookInfo: any;
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location,
     private service: AuthServiceService) { }
 
@@ -35,6 +36,7 @@ export class BookDetailComponent implements OnInit {
       // console.log(dataToSend, "data sending to Backend Apis");
       this.service.addToCartApi(dataToSend).subscribe((data) => {
         console.log("Book added in the cart", data);
+        this.router.navigate(['/addToCart']);
       }, (error) => {
         console.log("Cart could not be updated", error);
       });

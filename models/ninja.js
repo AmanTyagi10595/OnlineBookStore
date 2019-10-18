@@ -240,6 +240,9 @@ const cartSchema = mongoose.Schema({
         book_count: {
             type: Number
         },
+        book_order_count: {
+            type: Number
+        }
     }],
     address: {
         type: String

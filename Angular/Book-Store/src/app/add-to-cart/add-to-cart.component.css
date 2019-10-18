@@ -26,7 +26,14 @@ form {
 .value-button:hover {
   cursor: pointer;
 }
-
+.image {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.payment {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
 form #decrease {
   margin-right: -4px;
   border-radius: 8px 0 0 8px;

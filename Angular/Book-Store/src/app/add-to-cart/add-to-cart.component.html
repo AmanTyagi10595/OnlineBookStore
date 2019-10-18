@@ -26,12 +26,12 @@
                 ₹{{book.totalAmount}}
               </div>
               <div>
-                <button type=" button" class="btn btn-primary">Remove</button>
+                <button type=" button" class="btn btn-primary" (click)="remove(book.book_code); fetchCartBook()">Remove</button>
               </div>
             </div>
           </div>
         </div>
-        <div>
+        <div class="payment">
           <a [routerLink]="['/payment']" [queryParams]="bookInfo"><button type="button" class="btn btn-primary">Place Order</button>
           </a>
         </div>

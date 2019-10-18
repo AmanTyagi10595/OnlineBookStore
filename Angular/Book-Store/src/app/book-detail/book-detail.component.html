@@ -14,8 +14,8 @@
                 ID: <span>{{bookInfo?.code }}</span> <br />
                 Details: <span>{{bookInfo?.description }}</span> <br />
               </p>
-              <a [routerLink]="['/addToCart']" [queryParams]="bookInfo"> <button type="button" class="btn btn-primary" (click)=addToCartApi(bookInfo)>Add To Cart</button>
-              </a>
+              <!-- [queryParams]="bookInfo" -->
+              <button type="button" class="btn btn-primary" (click)=addToCartApi(bookInfo)>Add To Cart</button>
               <button type="button" class="btn btn-primary">Buy Now</button>
             </div>
           </div>

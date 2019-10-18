@@ -2,7 +2,6 @@ import { AuthServiceService } from './../services/auth-service.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { UpdateStorageService } from '../services/update-storage.service';
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 @Component({
   selector: 'app-user-profile',

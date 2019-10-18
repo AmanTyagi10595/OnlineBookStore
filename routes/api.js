@@ -513,7 +513,8 @@ router.post("/user/addToCart", function (req, res) {
     book_price: req.body.book.price,
     book_code: req.body.book.code,
     book_title: req.body.book.title,
-    _id: req.body.book._id
+    _id: req.body.book._id,
+    // book_order_count: req.body.order_count
   }
   cart.findOne({ "UserId": req.body.user._id }).then((data) => {
     if (data) {
@@ -573,6 +574,16 @@ router.post("/user/fetchCartBook", function (req, res) {
     res.status(200).send(cartBooks[0]);
   }).catch((err) => {
     res.status(200).send(err);
+  });
+});
+
+//****************Api to remove Book from the Cart ***************/
+router.post("/user/removeFromCart", function (req, res) {
+  console.log(req.body, "Remove from cart");
+  cart.update({ 'UserId': req.body.user_id }, { $pull: { 'book': { 'book_code': req.body.book_code } } }).then((result) => {
+    console.log(result, "removed data");
+  }).catch((error) => {
+    console.log("error", error);
   });
 });
 
