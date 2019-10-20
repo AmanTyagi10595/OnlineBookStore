@@ -21,6 +21,7 @@ import { AddToCartComponent } from './add-to-cart/add-to-cart.component';
 import { PaymentComponent } from './payment/payment.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SaveBookComponent } from './save-book/save-book.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AmanPipe,
     AddToCartComponent,
     PaymentComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    SaveBookComponent
   ],
   imports: [
     BrowserModule,
