@@ -47,4 +47,7 @@ export class AuthServiceService {
   fetchCartForPay(UserId) {
     return this.http.post(`${this.url}user/fetchCartBook`, { UserId });
   }
+  addBook(obj) {
+    return this.http.post(`${this.url}admine/addBooks`, obj);
+  }
 }

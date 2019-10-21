@@ -381,20 +381,22 @@ router.get("/testing2", function (req, res) {
 //+++++++++=============++++++++++++++++++++===========+++++++++++++============++++++++++++++=====+++++
 //***************Api To Add Books data *****************/
 router.post("/admine/addBooks", function (req, res) {
-  console.log("AddBooks api run");
+  console.log(req.body, "AddBooks api run");
   Books.findOne({ code: req.body.code }).then((result) => {
     if (!result) {
       var books = new Books(req.body);
       books.save().then(function (data) {
         console.log(data.toObject(), "Book Added");
-        res.send(data);
+        console.log(data, "book saved");
+        res.status(201).send({ "msg": "Book Added" });
       }).catch(function () {
         console.log("Somthing went wrong, data not saved");
+        res.status(400).send({ "msg": "Somthing Wrong" });
       });
     }
     else {
       console.log("The book with this code is present, if need some changes, you can update this");
-      res.send("The book with this code is present, if need some changes, you can update this");
+      res.status(409).send({"msg":"Book already present"});
     }
   });
 

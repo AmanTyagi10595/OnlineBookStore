@@ -1,95 +1,105 @@
 <div class="container">
-    <form>
-        <div class="row">
-            <div class="col-25">
-                <label for="fname">title:</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="fname" name="title" placeholder="Book title">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="lname">code:</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="code" name="lastname" placeholder="code">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="fname">genre:</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="fname" name="genre" placeholder="genre">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="lname">description:</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="lname" name="description" placeholder="description">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="fname">author:</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="fname" name="author" placeholder="author">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="lname">publisher:</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="lname" name="publisher" placeholder="publisher">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="fname">pages:</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="fname" name="pages" placeholder="pages">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="lname">image_url:</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="lname" name="image_url" placeholder="image_url">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="fname">buy_url:</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="fname" name="buy_url" placeholder="buy_url">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="lname">price:</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="lname" name="price" placeholder="price">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="lname">count:</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="lname" name="count" placeholder="count">
-            </div>
-        </div>
-        <div class="row">
-            <input type="submit" value="Submit">
-        </div>
-    </form>
+  <form [formGroup]="bookInfo" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-25">
+        <label for="title">title:</label>
+      </div>
+      <div class="col-60">
+        <input type="text" placeholder="Book title" formControlName="title">
+      </div>
+      <!-- {{name.value}} -->
+    </div>
+    <!-- <div formGroupName="address"> -->
+    <div class="row">
+      <div class="col-25">
+        <label for="code">code:</label>
+      </div>
+      <div class="col-60">
+        <input type="text" placeholder="code" formControlName="code" required>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="genre">genre:</label>
+      </div>
+      <div class="col-60">
+        <input type="text" placeholder="genre" formControlName="genre">
+      </div>
+    </div>
+    <!-- </div> -->
+
+    <div class="row">
+      <div class="col-25">
+        <label for="description">description:</label>
+      </div>
+      <div class="col-60">
+        <input type="text" id="lname" placeholder="description" formControlName="description" name="description">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="author">author:</label>
+      </div>
+      <div class="col-60">
+        <input type="text" id="fname" placeholder="author" formControlName="author">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="publisher">publisher:</label>
+      </div>
+      <div class="col-60">
+        <input type="text" id="lname" placeholder="publisher" formControlName="publisher">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="pages">pages:</label>
+      </div>
+      <div class="col-60">
+        <input type="text" id="fname" placeholder="pages" formControlName="pages">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="image_url">image_url:</label>
+      </div>
+      <div class="col-60">
+        <input type="text" id="lname" placeholder="image_url" formControlName="image_url">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="buy_url">buy_url:</label>
+      </div>
+      <div class="col-60">
+        <input type="text" id="fname" placeholder="buy_url" formControlName="buy_url">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="price">price:</label>
+      </div>
+      <div class="col-60">
+        <input type="text" id="lname" placeholder="price" formControlName="price">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="count">count:</label>
+      </div>
+      <div class="col-60">
+        <input type="text" id="lname" placeholder="count" formControlName="count">
+      </div>
+    </div>
+    <div class="row">
+      <span>
+        <input type="submit" value="Submit" [disabled]="bookInfo.invalid">
+      </span>
+      <span style="color:red;">{{msg}}</span>
+    </div>
+
+  </form>
+  <!-- {{bookInfo.value |json}}
+  Statsu: {{bookInfo.status}} -->
 </div>
