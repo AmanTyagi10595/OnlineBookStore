@@ -25,17 +25,9 @@ export class AddToCartComponent implements OnInit {
     // this.particularBookInfo();
     this.fetchCartBook();
   }
-  // particularBookInfo() {
-  //   this.route.queryParamMap.subscribe((bookInfo) => {
-  //     this.bookInfo = bookInfo['params'];
-  //     // console.log(this.bookInfo, "data in addto cart");
-  //   });
-
-  // }
 
   increase(id) {//1
     let data = this.fetchedCartBook.find(item => item._id === id);
-    // console.log(data, "data")
     if (data.val >= data.book_count) {
       data.message = `${data.book_count} is the max count for this book, that you can order now`;
       alert(data.message);
@@ -55,7 +47,6 @@ export class AddToCartComponent implements OnInit {
           }
         });
         localStorage.setItem('cartBooks', JSON.stringify(newBooks));
-        // console.log(newBooks);
       }
     }
   }
@@ -79,7 +70,6 @@ export class AddToCartComponent implements OnInit {
           }
         });
         localStorage.setItem('cartBooks', JSON.stringify(newBook));
-        // console.log(newBook);
       }
     }
   }
@@ -88,7 +78,6 @@ export class AddToCartComponent implements OnInit {
     // e.preventDefault();
     // e.stopPropagation();
     let data = this.fetchedCartBook.find(item => item._id === id);
-    console.log(e, "datatattattattattattatattatt");
     if (data.val < 0) {
       data.val = 1;
     }
@@ -103,7 +92,6 @@ export class AddToCartComponent implements OnInit {
         return { ...item, val: 1, message: "", totalAmount: item.book_price };
       })
       localStorage.setItem('cartBooks', JSON.stringify(this.fetchedCartBook));
-      console.log(this.fetchedCartBook, "data that fetched from cart");
     },
       ((error) => { console.log(error, "returned arror from Apis"); }));
 
@@ -111,17 +99,13 @@ export class AddToCartComponent implements OnInit {
 
   remove(book_code) {
     let user = JSON.parse(localStorage.getItem("user"));
-    console.log(book_code, user._id, "Remove button");
     let obj = {
       "book_code": book_code,
       "user_id": user._id
     };
-    console.log(obj, "Object value");
     this.service.removeFromCart(obj).subscribe((removedBook) => {
-      console.log("Book Removed from cart");
     },
       (error) => {
-        console.log("Error, in book removing");
       })
   }
 }

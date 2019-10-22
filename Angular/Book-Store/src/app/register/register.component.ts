@@ -27,16 +27,12 @@ export class RegisterComponent implements OnInit {
       this.result = "All fields are reruired";
     }
     else {
-      console.log(obj, "data entered")
       this.service.registerUser(obj).subscribe((response: any) => {
-        console.log(response, "trestujnj")
         if (response.msg == "Already registered") {
           this.result = "Already registered";
-          console.log("Already registered");
-        } 
+        }
         else if (response.msg == "User registed successfully") {
           this.result = "Successfully Registered";
-          console.log("User registed successfully");
         }
       }
       );

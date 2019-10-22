@@ -18,10 +18,8 @@ export class PaymentComponent implements OnInit {
     let books = JSON.parse(localStorage.getItem("cartBooks"));
     if (books) {
       this.booksInCart = books;
-      // console.log(this.booksInCart, "data in the payment component");
       books.forEach(r => {
         this.total = this.total + (r.book_price * r.val);
-        // console.log(this.total, r.book_price, r.val, "working");
       });
 
 

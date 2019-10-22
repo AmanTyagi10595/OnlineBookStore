@@ -50,4 +50,14 @@ export class AuthServiceService {
   addBook(obj) {
     return this.http.post(`${this.url}admine/addBooks`, obj);
   }
+  findAllBooks() {
+    return this.http.get(`${this.url}/admine/findBooks`);
+  }
+  updateBookDetails(obj) {
+    return this.http.post(`${this.url}admine/upadteBooks`, obj);
+  }
+  deleteBook(obj) {
+
+    return this.http.delete(`${this.url}admine/deleteBook`, { params: { book_ID: obj.code } });
+  }
 }

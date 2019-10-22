@@ -6,6 +6,7 @@ const cookieSession = require('cookie-session');
 const passport = require("passport");
 const cors = require('cors');
 // set up express app
+const port = process.env.PORT || 4000;
 const app = express();
 
 //
@@ -63,11 +64,10 @@ app.use('/api', require('./routes/api'));
 
 // error handling middleware
 app.use(function (err, req, res, next) {
-    console.log(err); // to see properties of message in our console
     res.status(422).send({ error: err.message });
 });
 
 // listen for requests
-app.listen(process.env.port || 4000, function () {
-    console.log('***######## Service started on port :4000 ###########****');
+app.listen(port, () => {
+    console.log(`http://localhost:${port}`);
 });

@@ -23,7 +23,6 @@ export class BookDetailComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('_id');
     this.service.bookDetail(id).subscribe((bookdetail) => {
       this.bookInfo = bookdetail;
-      console.log(this.bookInfo, "Book Info");
     });
   }
   addToCartApi(book) {
@@ -33,12 +32,9 @@ export class BookDetailComponent implements OnInit {
       "user": user
     };
     if (user) {
-      // console.log(dataToSend, "data sending to Backend Apis");
       this.service.addToCartApi(dataToSend).subscribe((data) => {
-        console.log("Book added in the cart", data);
         this.router.navigate(['/addToCart']);
       }, (error) => {
-        console.log("Cart could not be updated", error);
       });
     }
   }

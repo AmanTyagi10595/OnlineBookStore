@@ -31,9 +31,7 @@ export class UpdatePassComponent implements OnInit {
       password: this.obj.password
     }
 
-    console.log(formdata, "formdata")
     this.services.updatePassword(formdata).subscribe((response: any) => {
-      console.log(formdata, "Start working here")
       if (response.msg == "Password Updated") {
         this.result = "Password Updated"
       }

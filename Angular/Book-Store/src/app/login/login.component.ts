@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit {
 
       },
         (err: any) => {
-          console.log(err.error, "testing error");
           this.result = err.error.msg;
         }
       )

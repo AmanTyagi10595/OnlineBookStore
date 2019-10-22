@@ -14,7 +14,6 @@ var verifyToken = require('./VerifyToken');
 
 //JWT based authentication Registration
 router.post('/register', function (req, res) {
-  console.log(req.body, "Register Api start running");
 
   var hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
@@ -29,7 +28,6 @@ router.post('/register', function (req, res) {
       var token = jwt.sign({ id: user._id }, config.secret, {
         expiresIn: 86400 // expires in 24 hours
       });
-      console.log("User registed successfully");
       res.status(200).send({ auth: true, token: token, msg: "User registed successfully" });
     });
 });
@@ -46,7 +44,6 @@ router.get('/me', verifyToken, function (req, res, next) {
 });
 //JWT authentication based login
 router.post('/login', function (req, res) {
-  console.log(req.body, "loging Api Run");
   Register.findOne({ emailId: req.body.email }, function (err, user) {
     if (err) return res.status(500).send('Error on the server');
     if (!user) return res.status(404).send({ msg: 'No user found' });

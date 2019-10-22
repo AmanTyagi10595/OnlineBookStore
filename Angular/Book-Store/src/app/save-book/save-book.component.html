@@ -93,12 +93,15 @@
       </div>
     </div>
     <div class="row">
-      <span>
+      <span *ngIf="isForEdit==false">
         <input type="submit" value="Submit" [disabled]="bookInfo.invalid">
+      </span>
+      <span *ngIf="isForEdit==true">
+        <input type="submit" value="Update">
       </span>
       <span style="color:red;">{{msg}}</span>
     </div>
-
+    <div>All Books<a [routerLink]="['/listBooks']" class="backbtnlgn">AllBooks</a></div>
   </form>
   <!-- {{bookInfo.value |json}}
   Statsu: {{bookInfo.status}} -->

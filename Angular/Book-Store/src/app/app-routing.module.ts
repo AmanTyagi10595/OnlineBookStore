@@ -11,6 +11,7 @@ import { AddToCartComponent } from './add-to-cart/add-to-cart.component';
 import { PaymentComponent } from './payment/payment.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SaveBookComponent } from './save-book/save-book.component';
+import { ListBooksComponent } from './list-books/list-books.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,11 @@ const routes: Routes = [
     component: AddToCartComponent
   },
   {
-    path: 'saveBook',
+    path: 'listBooks',
+    component: ListBooksComponent
+  },
+  {
+    path: 'saveBook/:id',
     component: SaveBookComponent
   },
   {

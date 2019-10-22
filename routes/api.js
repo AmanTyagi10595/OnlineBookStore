@@ -395,8 +395,7 @@ router.post("/admine/addBooks", function (req, res) {
       });
     }
     else {
-      console.log("The book with this code is present, if need some changes, you can update this");
-      res.status(409).send({"msg":"Book already present"});
+      res.status(409).send({ "msg": "Book already present" });
     }
   });
 
@@ -407,37 +406,39 @@ router.post("/admine/upadteBooks", function (req, res) {
   var date = Date.now();
   var data = req.body;
   Books.findOneAndUpdate({ code: req.body.code },
-    { $set: { count: data.count, price: data.price, create_date: date } }).then((result) => {
-      console.log(result.toObject(), "Upadted");
-      res.send(result);
+    {
+      $set: {
+        count: data.count, price: data.price, create_date: date, title: data.title, genre: data.genre, description: data.description, author: data.author, publisher: data.publisher,
+        pages: data.pages, image_url: data.image_url, buy_url: data.buy_url
+      }
+    }).then((result) => {
+      res.status(200).send({ msg: "Book Updated" });
     }).catch(function () {
       console.log("Something went wrong, books data not updated");
+      res.send({ msg: "Somthing went wrong" });
     });
 });
 //*************** Api to delete the Book from the BookData **************/
 router.delete("/admine/deleteBook", function (req, res) {
-  console.log("Delete Book api run");
-  Books.findOneAndRemove({ code: req.body.code }).then((result) => {
+  console.log(req.query, "Delete Book api run");
+  Books.findOneAndRemove({ code: req.query.book_ID }).then((result) => {
     console.log("the book that was having code: ", req.body.code, "have been removed");
-    res.send("the book have been removed");
+    res.status(200).send({ msg: "Book Removed" });
   }).catch(function () {
     console.log("Something went wrong book could not deleted");
-    res.send("Something went wrong book could not deleted");
+    res.status(400).send({ msg: "could not delete" });
   });
 });
 //*************** Api to find all books for the User(with limits) *********/
 router.get("/user/findBooks", function (req, res) {
   console.log("FindAll Books Api run");
   Books.find({}, { count: 0 }).then((result) => {
-    // console.log(result);
     res.send({ res: result });
   });
 });
 //*************** Api to find all books for the Admine(with limits) *********/
 router.get("/admine/findBooks", function (req, res) {
-  console.log("FindAll Books Api run");
-  Books.find().limit(2).then((result) => {
-    // console.log(result);
+  Books.find().then((result) => {
     res.send(result);
   });
 });
@@ -445,7 +446,6 @@ router.get("/admine/findBooks", function (req, res) {
 router.get("/user/findParticularBooks/:id", function (req, res) {
   console.log("FindAll Books Api run");
   Books.findOne({ _id: req.params.id }).select('-__v').then((result) => {
-    // console.log(result);
     res.send(result);
   });
 });
@@ -453,7 +453,6 @@ router.get("/user/findParticularBooks/:id", function (req, res) {
 router.get("/admine/findParticularBooks", function (req, res) {
   console.log("FindAll Books Api run, Admine");
   Books.find({ code: req.body.code }).then((result) => {
-    console.log("Find data by admine has been sent");
     res.send(result);
   });
 });

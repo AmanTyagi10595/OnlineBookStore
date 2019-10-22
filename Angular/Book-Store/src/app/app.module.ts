@@ -22,6 +22,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SaveBookComponent } from './save-book/save-book.component';
+import { ListBooksComponent } from './list-books/list-books.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { SaveBookComponent } from './save-book/save-book.component';
     AddToCartComponent,
     PaymentComponent,
     UserProfileComponent,
-    SaveBookComponent
+    SaveBookComponent,
+    ListBooksComponent
   ],
   imports: [
     BrowserModule,
