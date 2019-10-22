@@ -50,8 +50,9 @@ export class AuthServiceService {
   addBook(obj) {
     return this.http.post(`${this.url}admine/addBooks`, obj);
   }
-  findAllBooks() {
-    return this.http.get(`${this.url}/admine/findBooks`);
+  findAllBooks(obj) {
+    console.log(obj, "Obj for limit");
+    return this.http.get(`${this.url}/admine/findBooks`, obj);
   }
   updateBookDetails(obj) {
     return this.http.post(`${this.url}admine/upadteBooks`, obj);

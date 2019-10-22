@@ -1,42 +1,48 @@
 <!-- <button class=primary [routerLink]="['/saveBook']">Add Book</button> -->
-<button type="button" class="btn btn-primary" [routerLink]="['/saveBook/', '0']">Add Book</button>
-<table class="table table-hover table-striped">
-  <thead class="thead-light table-striped">
-    <tr>
-      <th>#</th>
-      <th>Image</th>
-      <!-- <th>_Id</th> -->
-      <th>Code</th>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Author</th>
-      <th>Price</th>
-      <th>Count</th>
-      <th>Edit</th>
-      <th>Delete</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let book of listBooks; index as i">
-      <td>{{i + 1}}</td>
-      <td>{{book.image}}</td>
-      <!-- <td>{{book._id}}</td> -->
-      <td>{{book.code}}</td>
-      <td>{{book.title}}</td>
-      <td>{{book.description}}</td>
-      <td>{{book.author}}</td>
-      <td>{{book.price}}</td>
-      <td>{{book.count}}</td>
-      <td>
-        <button type="button" class="btn btn-primary" (click)=onClickEdit(book)>
-          <i class="fa fa-pencil" aria-hidden="true"></i>
-        </button>
-      </td>
-      <td>
-        <button type="button" class="btn btn-primary applycolor" (click)=onClickDelete(book)>
-          <i class="fa fa-trash" aria-hidden="true"></i>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div>
+  <button type="button" class="btn btn-primary" [routerLink]="['/saveBook/', '0']">Add Book</button>
+  <table class="table table-hover table-striped">
+    <thead class="thead-light table-striped">
+      <tr>
+        <th>#</th>
+        <th>Image</th>
+        <!-- <th>_Id</th> -->
+        <th>Code</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>Count</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of listBooks; index as i">
+        <td>{{i + 1}}</td>
+        <td>{{book.image}}</td>
+        <!-- <td>{{book._id}}</td> -->
+        <td>{{book.code}}</td>
+        <td>{{book.title}}</td>
+        <td>{{book.description}}</td>
+        <td>{{book.author}}</td>
+        <td>{{book.price}}</td>
+        <td>{{book.count}}</td>
+        <td>
+          <button type="button" class="btn btn-primary" (click)=onClickEdit(book)>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary applycolor" (click)=onClickDelete(book)>
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="paginatorBottom">
+    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 15]" (page)="pageEvent = onClickPaginator($event)">
+    </mat-paginator>
+  </div>
+</div>

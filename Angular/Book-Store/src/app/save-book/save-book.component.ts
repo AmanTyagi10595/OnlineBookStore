@@ -2,7 +2,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validator, Validators } from '@angular/forms';
 import { AuthServiceService } from '../services/auth-service.service';
-
+export interface ISomething {
+  msg: any;
+}
 @Component({
   selector: 'app-save-book',
   templateUrl: './save-book.component.html',
@@ -50,12 +52,14 @@ export class SaveBookComponent implements OnInit {
       });
     }
     if (this.isForEdit == true) {
-      this.service.updateBookDetails(this.bookInfo.value).subscribe((data) => {
+      this.service.updateBookDetails(this.bookInfo.value).subscribe((data: ISomething) => {
         this.msg = data.msg;
       });
     }
 
   }
+
+
 
   initializeForm() {
     this.bookInfo = this.fb.group({

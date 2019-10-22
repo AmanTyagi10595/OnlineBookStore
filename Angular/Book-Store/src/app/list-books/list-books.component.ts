@@ -1,6 +1,8 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
+import { MatPaginator } from '@angular/material';
+
 
 @Component({
   selector: 'app-list-books',
@@ -9,6 +11,8 @@ import { AuthServiceService } from '../services/auth-service.service';
 })
 export class ListBooksComponent implements OnInit {
   listBooks: any;
+  limit: number;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(private service: AuthServiceService,
     private router: Router) { }
 
@@ -16,7 +20,11 @@ export class ListBooksComponent implements OnInit {
     this.findAllBooks();
   }
   findAllBooks() {
-    this.service.findAllBooks().subscribe((data) => {
+    obj: {
+      limit: 10;
+    }
+    console.log(obj, "object in com.ts");
+    this.service.findAllBooks(obj).subscribe((data) => {
       this.listBooks = data;
     });
   }
@@ -25,7 +33,15 @@ export class ListBooksComponent implements OnInit {
   }
   onClickDelete(book) {
     this.service.deleteBook(book).subscribe((data) => {
-      console.log(data.msg);
-    })
+      console.log(data['msg']);
+      if (data['msg'] == "Book Removed") {
+        this.ngOnInit();
+      }
+    });
+  }
+  onClickPaginator(event) {
+    console.log(event, "data of event");
+    this.limit = event.pageSize;
+    this.service.findAllBooks();
   }
 }

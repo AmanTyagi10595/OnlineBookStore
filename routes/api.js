@@ -422,7 +422,7 @@ router.post("/admine/upadteBooks", function (req, res) {
 router.delete("/admine/deleteBook", function (req, res) {
   console.log(req.query, "Delete Book api run");
   Books.findOneAndRemove({ code: req.query.book_ID }).then((result) => {
-    console.log("the book that was having code: ", req.body.code, "have been removed");
+    console.log("the book that was having code: ", req.query.book_ID, "have been removed");
     res.status(200).send({ msg: "Book Removed" });
   }).catch(function () {
     console.log("Something went wrong book could not deleted");
@@ -438,7 +438,7 @@ router.get("/user/findBooks", function (req, res) {
 });
 //*************** Api to find all books for the Admine(with limits) *********/
 router.get("/admine/findBooks", function (req, res) {
-  Books.find().then((result) => {
+  Books.find().limit(10).then((result) => {
     res.send(result);
   });
 });

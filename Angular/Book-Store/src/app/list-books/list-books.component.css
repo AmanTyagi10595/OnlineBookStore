@@ -5,3 +5,6 @@
   background-color: #d9534f;
   border-color: #d9534f;
 }
+.mat-paginator-range-label {
+  margin: 0;
+}
