@@ -438,9 +438,15 @@ router.get("/user/findBooks", function (req, res) {
 });
 //*************** Api to find all books for the Admine(with limits) *********/
 router.get("/admine/findBooks", function (req, res) {
-  Books.find().limit(10).then((result) => {
-    res.send(result);
-  });
+  let limit = parseInt(req.query.limit, 10);
+  let skip = req.query.skip ? parseInt(req.query.skip, 10) : 0;
+  let promises = [
+    Books.find().limit(limit).skip(skip),
+    Books.find().count()
+  ];
+  Promise.all(promises).then(data => {
+    res.status(200).json({ result: data[0], count: data[1] })
+  })
 });
 //*************** Api to find particular book with its code by user **************/
 router.get("/user/findParticularBooks/:id", function (req, res) {
@@ -521,20 +527,18 @@ router.post("/user/addToCart", function (req, res) {
     if (data) {
       data.book.forEach((result) => {
         if (result._id == req.body.book._id) {
-          console.log("Book already in your cart");
           flag = 1;
           return;
         }
       });
       setTimeout(function () {
         if (flag == 0) {
-          console.log("inside addNewBookInCart function");
+          console.log("inside  function");
           cart.findOneAndUpdate({ "UserId": req.body.user._id }, { "$push": { "book": saveBook } },
             { "new": true }).then((data) => {
               console.log("book updated in cart");
               res.status(200).send(data);
             }).catch((err) => {
-              console.log(err);
               res.status(500).send(err);
             });
         }
@@ -557,7 +561,6 @@ router.post("/user/addToCart", function (req, res) {
       };
       var Cart = new cart(book);
       Cart.save().then(function (data) {
-        console.log("New cart is created");
         res.status(200).send({ msg: "new cart created" });
       }).catch(function () {
         res.status(500).send({ msg: "db error" });
@@ -569,7 +572,6 @@ router.post("/user/addToCart", function (req, res) {
 
 //*****************Api to show total book in the cart *************/
 router.post("/user/fetchCartBook", function (req, res) {
-  console.log(req.body, "fetchCartBook api run");
   cart.find({ "UserId": req.body.UserId }).then((cartBooks) => {
     // console.log(JSON.stringify(cartBooks[0]), "data to sent to front end")
     res.status(200).send(cartBooks[0]);

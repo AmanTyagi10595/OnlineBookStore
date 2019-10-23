@@ -1,6 +1,10 @@
 <!-- <button class=primary [routerLink]="['/saveBook']">Add Book</button> -->
 <div>
   <button type="button" class="btn btn-primary" [routerLink]="['/saveBook/', '0']">Add Book</button>
+  <span class="book-filter">
+    FilterBook:
+    <input type="text" name="firstname" [(ngModel)]="filterString">
+  </span>
   <table class="table table-hover table-striped">
     <thead class="thead-light table-striped">
       <tr>
@@ -18,8 +22,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let book of listBooks; index as i">
-        <td>{{i + 1}}</td>
+      <tr *ngFor="let book of listBooks; let i = index">
+        <td>{{i + (indexStart)}}</td>
         <td>{{book.image}}</td>
         <!-- <td>{{book._id}}</td> -->
         <td>{{book.code}}</td>
@@ -42,7 +46,7 @@
     </tbody>
   </table>
   <div class="paginatorBottom">
-    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 15]" (page)="pageEvent = onClickPaginator($event)">
+    <mat-paginator [length]="count" [pageSize]="10" [pageSizeOptions]="[5, 10, 15]" (page)="pageEvent = onClickPaginator($event)">
     </mat-paginator>
   </div>
 </div>

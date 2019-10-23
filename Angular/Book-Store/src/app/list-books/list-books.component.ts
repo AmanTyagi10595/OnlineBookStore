@@ -11,7 +11,14 @@ import { MatPaginator } from '@angular/material';
 })
 export class ListBooksComponent implements OnInit {
   listBooks: any;
+  count: number;
   limit: number;
+  indexStart = 1;
+  filterString: string;
+  obj = {
+    "limit": 11,
+    "skip": 0,
+  };
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(private service: AuthServiceService,
     private router: Router) { }
@@ -20,13 +27,11 @@ export class ListBooksComponent implements OnInit {
     this.findAllBooks();
   }
   findAllBooks() {
-    obj: {
-      limit: 10;
-    }
-    console.log(obj, "object in com.ts");
-    this.service.findAllBooks(obj).subscribe((data) => {
-      this.listBooks = data;
-    });
+    this.obj = {
+      "limit": 7,
+      "skip": 0,
+    };
+    this.getBooks(this.obj);
   }
   onClickEdit(book) {
     this.router.navigate(['/saveBook', book._id], { queryParams: book, skipLocationChange: true });
@@ -40,8 +45,19 @@ export class ListBooksComponent implements OnInit {
     });
   }
   onClickPaginator(event) {
-    console.log(event, "data of event");
-    this.limit = event.pageSize;
-    this.service.findAllBooks();
+    console.log(event)
+    this.obj = {
+      "limit": event.pageSize,
+      "skip": (event.pageIndex) * (event.pageSize),
+    };
+    this.indexStart = (((event.pageIndex) * (event.pageSize)) + 1);
+    this.getBooks(this.obj);
+  }
+
+  getBooks(obj) {
+    this.service.findAllBooks(obj).subscribe((data) => {
+      this.listBooks = data['result'];
+      this.count = data['count']
+    });
   }
 }

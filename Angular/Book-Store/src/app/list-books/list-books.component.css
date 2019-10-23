@@ -8,3 +8,7 @@
 .mat-paginator-range-label {
   margin: 0;
 }
+.book-filter {
+  float: right;
+  margin-right: 11%;
+}
