@@ -1,5 +1,5 @@
 const express = require('express');
-// var multer = require ('multer');
+var multer = require('multer');
 //change;
 const ejs = require('ejs');
 const router = express.Router();
@@ -210,20 +210,32 @@ router.post('/register', async function (req, res, next) {
   }
 
 });
-
+//************FOr upload image********** */
+var path = require('path');
+var s = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../uploads/files/'));
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+const u = multer({
+  storage: s
+});
 //*********** Api to update the userProfile ***************/
-router.post("/updateProfile", function (req, res) {
-  console.log(req.body, "Update Profile Api is running");
+router.post("/updateProfile", u.single('myFile'), function (req, res) {
+  console.log(req.body, req.file, "Update Profile Api is running");
   Register.findOneAndUpdate({ "emailId": req.body.email }, {
     "$set": {
       "name": req.body.name, "emailId": req.body.email,
-      "phone": req.body.phone
+      "phone": req.body.phone, "profilePhotoUrl": req.file.path
     }
   }, { "new": true }).then((data) => {
-    console.log(data.toObject(), "profile updated");
+    // console.log(data.toObject(), "profile updated");
     res.status(200).send({ msg: "profile updated", msgData: data });
   }).catch((err) => {
-    console.log("error in update profile", err);
+    // console.log("error in update profile", err);
     res.status(502).send(err, { msg: "db error" });
   });
 });
@@ -247,7 +259,6 @@ router.put('/resetPassword', function (req, res) {
   Register.findOne({ emailId: req.body.email }).then((result) => {
     if (!result) {
 
-      console.log("user not registered")
       res.status(500).send({ msg: "user not registered" });
     }
     else {
@@ -264,8 +275,8 @@ router.put('/resetPassword', function (req, res) {
       //   var Otp = new OTPgene(body);
 
       Register.findOneAndUpdate({ "emailId": req.body.email }, { "$set": { "OTPdata.OTP": OTP, "OTPdata.OTPGenTime": a } }).then(function (data) {
-        console.log(req.body.email, "testin mail")
-        var email = req.body.email
+        console.log(req.body.email, "testin mail");
+        var email = req.body.email;
         var transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
@@ -440,13 +451,14 @@ router.get("/user/findBooks", function (req, res) {
 router.get("/admine/findBooks", function (req, res) {
   let limit = parseInt(req.query.limit, 10);
   let skip = req.query.skip ? parseInt(req.query.skip, 10) : 0;
+  let bookCostRange = parseInt(req.query.bookCostRange);
   let promises = [
-    Books.find().limit(limit).skip(skip),
+    Books.find({ price: { $lte: bookCostRange } }).limit(limit).skip(skip),
     Books.find().count()
   ];
   Promise.all(promises).then(data => {
-    res.status(200).json({ result: data[0], count: data[1] })
-  })
+    res.status(200).json({ result: data[0], count: data[1] });
+  });
 });
 //*************** Api to find particular book with its code by user **************/
 router.get("/user/findParticularBooks/:id", function (req, res) {
@@ -522,7 +534,7 @@ router.post("/user/addToCart", function (req, res) {
     book_title: req.body.book.title,
     _id: req.body.book._id,
     // book_order_count: req.body.order_count
-  }
+  };
   cart.findOne({ "UserId": req.body.user._id }).then((data) => {
     if (data) {
       data.book.forEach((result) => {
@@ -538,7 +550,7 @@ router.post("/user/addToCart", function (req, res) {
             { "new": true }).then((data) => {
               console.log("book updated in cart");
               res.status(200).send(data);
-            }).catch((err) => {
+            }).catch(err => {
               res.status(500).send(err);
             });
         }
@@ -626,7 +638,7 @@ router.get("/user/addCard", function (req, res) {
       cvc: data.cvc
     }
   }, function (err, token) {
-    console.log(err, token)
+    console.log(err, token);
   });
 });
 //*************Stripe, add card to customer **************/

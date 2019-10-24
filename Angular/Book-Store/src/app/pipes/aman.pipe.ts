@@ -5,13 +5,25 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 
 export class AmanPipe implements PipeTransform {
-  transform(item, ...args) {
-    let arr = [];
-    for (let it in item) {
-      let obj = {};
-      obj[it] = item[it]
-      arr.push(obj);
+  set;
+
+  transform(item, args?) {
+
+    if (!args) {
+      return item;
+    } else {
+      this.set = new Set();
+      item.forEach(it => {
+        delete it._id;
+        delete it.create_date;
+        Object.values(it).forEach(val => {
+          if (val.toString().toLowerCase().includes(args.toLowerCase())) {
+            this.set.add(it);
+          }
+        })
+      });
+      return [...this.set];
     }
-    return arr;
   }
 }
+// TODO filter from database

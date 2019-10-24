@@ -5,6 +5,14 @@
     FilterBook:
     <input type="text" name="firstname" [(ngModel)]="filterString">
   </span>
+  <div>
+    <span>
+      <mat-slider thumbLabel [value]="150" tickInterval="1000" min="1" max="1000" (change)="onSliderValueChange($event)"></mat-slider>
+    </span>
+    <span *ngIf="sliderActive == true">
+      Price Upto: {{obj.bookCostRange}}
+    </span>
+  </div>
   <table class="table table-hover table-striped">
     <thead class="thead-light table-striped">
       <tr>
@@ -22,7 +30,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let book of listBooks; let i = index">
+      <tr *ngFor="let book of listBooks| aman: filterString ; let i = index">
         <td>{{i + (indexStart)}}</td>
         <td>{{book.image}}</td>
         <!-- <td>{{book._id}}</td> -->

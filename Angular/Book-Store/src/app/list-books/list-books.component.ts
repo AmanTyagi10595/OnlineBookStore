@@ -15,9 +15,13 @@ export class ListBooksComponent implements OnInit {
   limit: number;
   indexStart = 1;
   filterString: string;
+  sliderActive = false;
+  // formatLabel = "Select Cost range of book";
+  // costLimit = 500;
   obj = {
     "limit": 11,
     "skip": 0,
+    "bookCostRange": 10000
   };
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(private service: AuthServiceService,
@@ -30,6 +34,7 @@ export class ListBooksComponent implements OnInit {
     this.obj = {
       "limit": 7,
       "skip": 0,
+      "bookCostRange": this.obj.bookCostRange
     };
     this.getBooks(this.obj);
   }
@@ -45,10 +50,11 @@ export class ListBooksComponent implements OnInit {
     });
   }
   onClickPaginator(event) {
-    console.log(event)
+    // console.log(event);
     this.obj = {
       "limit": event.pageSize,
       "skip": (event.pageIndex) * (event.pageSize),
+      "bookCostRange": this.obj.bookCostRange
     };
     this.indexStart = (((event.pageIndex) * (event.pageSize)) + 1);
     this.getBooks(this.obj);
@@ -59,5 +65,10 @@ export class ListBooksComponent implements OnInit {
       this.listBooks = data['result'];
       this.count = data['count']
     });
+  }
+  onSliderValueChange(event) {
+    this.sliderActive = true;
+    this.obj.bookCostRange = event.value;
+    this.getBooks(this.obj);
   }
 }

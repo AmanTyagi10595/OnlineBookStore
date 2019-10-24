@@ -51,7 +51,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // connect to mongodb
-mongoose.connect('mongodb://localhost/ninjago');
+mongoose.connect('mongodb://localhost/ninjago', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 mongoose.Promise = global.Promise;
 
 // use body-parser middleware
@@ -69,5 +69,5 @@ app.use(function (err, req, res, next) {
 
 // listen for requests
 app.listen(port, () => {
-    console.log(`http://localhost:${port}`);
+    console.log(`http://localhost:${port} Running`);
 });

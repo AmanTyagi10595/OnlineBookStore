@@ -51,7 +51,7 @@ export class AuthServiceService {
     return this.http.post(`${this.url}admine/addBooks`, obj);
   }
   findAllBooks(obj) {
-    return this.http.get(`${this.url}/admine/findBooks`, { params: { limit: obj.limit, skip: obj.skip } });
+    return this.http.get(`${this.url}/admine/findBooks`, { params: { limit: obj.limit, skip: obj.skip, bookCostRange: obj.bookCostRange } });
   }
   updateBookDetails(obj) {
     return this.http.post(`${this.url}admine/upadteBooks`, obj);

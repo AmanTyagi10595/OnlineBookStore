@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   loginSubmit(obj) {
     if (obj.email == '' || obj.password == '') {
-      this.result = "Both fields are reruired"
+      this.result = "Both fields are reruired";
     }
     else {
       this.service.loginSubmit(obj).subscribe((response: any) => {

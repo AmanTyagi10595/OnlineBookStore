@@ -78,6 +78,9 @@ const RegistrationSchema = new Schema({
         type: Number,
         default: 9999999999
     },
+    profilePhotoUrl: {
+        type: String
+    },
     password: {
         type: String
     },

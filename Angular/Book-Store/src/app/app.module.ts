@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SaveBookComponent } from './save-book/save-book.component';
 import { ListBooksComponent } from './list-books/list-books.component';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MatTableModule, MatPaginatorModule } from '@angular/material';
     UserProfileComponent,
     SaveBookComponent,
     ListBooksComponent
+
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { MatTableModule, MatPaginatorModule } from '@angular/material';
     ReactiveFormsModule,
     HttpClientModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatSliderModule
   ],
   providers: [
     AuthServiceService,

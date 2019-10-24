@@ -12,6 +12,8 @@ export class UserProfileComponent implements OnInit {
   userInfo: any;
   profileForm: FormGroup;
   message: string = "";
+  profileImageUrl:string;
+  url: any;
   constructor(
     private fb: FormBuilder,
     private service: AuthServiceService,
@@ -26,6 +28,8 @@ export class UserProfileComponent implements OnInit {
     let user = localStorage.getItem('user');
     if (user) {
       this.userInfo = JSON.parse(user);
+      this.profileImageUrl = JSON.parse(user).profilePhotoUrl;
+      console.log(this.profileImageUrl,"Image url");
       this.profileForm.patchValue({
         name: this.userInfo.name,
         email: this.userInfo.emailId,
@@ -53,6 +57,17 @@ export class UserProfileComponent implements OnInit {
     }, (error: any) => {
       this.message = "Somthing went wrong";
     });
+
+  }
+  onSelect(event){
+    var reader = new FileReader();
+
+    let imageFile = reader.readAsDataURL(event.target.files[0]); // read file as data url
+console.log(event.target.files[0])
+    reader.onload = (event) => { // called once readAsDataURL is completed
+      this.url = event.target.result;
+      console.log(this.url);
+    }
 
   }
 }
