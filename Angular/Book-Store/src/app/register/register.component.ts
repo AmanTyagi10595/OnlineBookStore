@@ -1,3 +1,4 @@
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,36 +9,46 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  obj = {
-    email: '',
-    name: '',
-    password: ''
-  };
+  registerForm: FormGroup;
+  file;
 
   constructor(private service: AuthServiceService,
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
   ) { }
 
   ngOnInit() {
+    this.initializeForm();
+  }
+
+  initializeForm() {
+    this.registerForm = this.fb.group({
+      name: [null],
+      email: [null],
+      myFile: [null],
+      psw: [null]
+    });
   }
   result: string
-  registerFun(obj) {
-    if (obj.email == '' || obj.password == '' || obj.name == '') {
-      this.result = "All fields are reruired";
-    }
-    else {
+  registerFun() {
+    //   this.registerForm.get('myFile').setValue(this.file)
+    const  obj  = { ...this.registerForm.value };
+    if(this.file) {
+        obj['myFile'] = this.file;
+      };
       this.service.registerUser(obj).subscribe((response: any) => {
         if (response.msg == "Already registered") {
           this.result = "Already registered";
         }
         else if (response.msg == "User registed successfully") {
-          this.result = "Successfully Registered";
+          this.router.navigate(['/login']);
         }
       }
       );
-
-    }
-
   }
+
+  fileChanged(e) {
+    this.file = e.target.files[0];
+ }
 }

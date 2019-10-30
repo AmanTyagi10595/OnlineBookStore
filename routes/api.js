@@ -41,6 +41,20 @@ var json2xls = require('json2xls');
 //  };
 //  excelData();
 // });
+//************FOr upload image********** */
+var path = require('path');
+var s = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../uploads/files/'));
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+const u = multer({
+  storage: s
+});
+
 
 router.get("/JsonToCsv", async function (req, res) {
   var data = await Register.find({});
@@ -199,8 +213,6 @@ router.delete('/ninjas/:id', function (req, res, next) {
 
 //Regiter the user
 router.post('/register', async function (req, res, next) {
-  console.log(req.body, "Register API Run");
-
   try {
     var user = new Register(req.body);
     await user.save();
@@ -210,33 +222,30 @@ router.post('/register', async function (req, res, next) {
   }
 
 });
-//************FOr upload image********** */
-var path = require('path');
-var s = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads/files/'));
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  }
-});
-const u = multer({
-  storage: s
-});
+
 //*********** Api to update the userProfile ***************/
-router.post("/updateProfile", u.single('myFile'), function (req, res) {
-  console.log(req.body, req.file, "Update Profile Api is running");
-  Register.findOneAndUpdate({ "emailId": req.body.email }, {
+router.put("/updateProfile", u.single('myFile'), function (req, res) {
+  console.log(req.body, req.file, "daddaddadaadadaadadadaadadadadaddadadadadadadda")
+  var img = fs.readFileSync(req.file.path);
+  var encode_image = img.toString('base64');
+  var finalImg = {
+    contentType: req.file.mimetype,
+    image: new Buffer.from(encode_image, 'base64')
+  };
+  let data = JSON.parse(req.body.data);
+  Register.findOneAndUpdate({ "emailId": data.email }, {
     "$set": {
-      "name": req.body.name, "emailId": req.body.email,
-      "phone": req.body.phone, "profilePhotoUrl": req.file.path
+      "name": data.name,
+      "emailId": data.email,
+      "phone": data.phone,
+      "profilePhotoUrl": finalImg
     }
   }, { "new": true }).then((data) => {
-    // console.log(data.toObject(), "profile updated");
+    console.log(data, "profile updated");
     res.status(200).send({ msg: "profile updated", msgData: data });
   }).catch((err) => {
-    // console.log("error in update profile", err);
-    res.status(502).send(err, { msg: "db error" });
+    console.log("error in update profile", err.message);
+    res.status(502).send({ msg: "db error" + err.message });
   });
 });
 

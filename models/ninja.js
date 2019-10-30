@@ -79,8 +79,9 @@ const RegistrationSchema = new Schema({
         default: 9999999999
     },
     profilePhotoUrl: {
-        type: String
+        type: Schema.Types.Mixed
     },
+
     password: {
         type: String
     },

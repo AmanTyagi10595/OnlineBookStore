@@ -27,13 +27,29 @@ export class AuthServiceService {
     return this.http.get(`${this.url}user/findBooks`, httpOptions);
   }
   registerUser(obj) {
-    return this.http.post(`${this.url}auth/register`, obj, httpOptions);
+    let httpOptions = new HttpHeaders({
+      'Content-type': 'multipart/form-data'
+    });
+    const formdata = new FormData();
+    formdata.append('myFile', obj.myFile);
+    console.log(obj.myFile, '---')
+    delete obj.myFile;
+    formdata.append('data', JSON.stringify(obj))
+    return this.http.post(`${this.url}auth/register`, formdata, httpOptions);
   }
   bookDetail(id) {
     return this.http.get(`${this.url}user/findParticularBooks/${id}`);
   }
   updateProfile(obj) {
-    return this.http.post(`${this.url}updateProfile`, obj, httpOptions);
+    let httpOptions = new HttpHeaders({
+      'Content-type': 'multipart/form-data'
+    });
+    const formdata = new FormData();
+    formdata.append('myFile', obj.myFile);
+    console.log(obj.myFile, '---')
+    delete obj.myFile;
+    formdata.append('data', JSON.stringify(obj))
+    return this.http.put(`${this.url}updateProfile`, formdata, httpOptions);
   }
   addToCartApi(obj) {
     return this.http.post(`${this.url}user/addToCart`, obj);

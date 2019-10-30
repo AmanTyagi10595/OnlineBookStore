@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { AuthServiceService } from './../services/auth-service.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
@@ -14,10 +15,14 @@ export class UserProfileComponent implements OnInit {
   message: string = "";
   profileImageUrl:string;
   url: any;
+  mimeType;
+  // file;
+
   constructor(
     private fb: FormBuilder,
     private service: AuthServiceService,
-    private update: UpdateStorageService
+    private update: UpdateStorageService,
+    private domSanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -28,12 +33,12 @@ export class UserProfileComponent implements OnInit {
     let user = localStorage.getItem('user');
     if (user) {
       this.userInfo = JSON.parse(user);
-      this.profileImageUrl = JSON.parse(user).profilePhotoUrl;
-      console.log(this.profileImageUrl,"Image url");
+      this.profileImageUrl =  `data:image/jpeg;base64,${this.userInfo.profilePhotoUrl.image}`;
+      // this.profileImageUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(`data:${this.userInfo.profilePhotoUrl.contentType};base64,${btoa(this.userInfo.profilePhotoUrl.image)}`);
       this.profileForm.patchValue({
         name: this.userInfo.name,
         email: this.userInfo.emailId,
-        phone: this.userInfo.phone
+        phone: this.userInfo.phone,
       })
     }
   }
@@ -43,10 +48,15 @@ export class UserProfileComponent implements OnInit {
       name: [null],
       phone: [null],
       address: [null],
-      email: [null]
+      email: [null],
+      myFile: [null],
     });
   }
   updateProfile(obj) {
+    // const  obj  = { ...this.registerForm.value };
+    // if(this.file) {
+    //     obj['myFile'] = this.file;
+    //   };
     this.service.updateProfile(obj).subscribe((response: any) => {
       this.message = "Profile Upadetd";
       if (localStorage.getItem('user')) {
@@ -59,15 +69,10 @@ export class UserProfileComponent implements OnInit {
     });
 
   }
-  onSelect(event){
-    var reader = new FileReader();
-
-    let imageFile = reader.readAsDataURL(event.target.files[0]); // read file as data url
-console.log(event.target.files[0])
-    reader.onload = (event) => { // called once readAsDataURL is completed
-      this.url = event.target.result;
-      console.log(this.url);
-    }
-
+  fileChanged(e){
+    // this.file = e.target.files[0];
+    this.profileForm.patchValue({
+      myFile: e.target.files[0],
+    })
   }
 }

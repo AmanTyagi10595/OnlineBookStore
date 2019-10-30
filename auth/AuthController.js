@@ -11,19 +11,44 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var config = require('../config');
 var verifyToken = require('./VerifyToken');
+var multer = require('multer');
+var fs = require('fs');
 
-//JWT based authentication Registration
-router.post('/register', function (req, res) {
 
-  var hashedPassword = bcrypt.hashSync(req.body.password, 8);
+//************FOr upload image********** */
+var path = require('path');
+var s = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../uploads/files/'));
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+const u = multer({
+  storage: s
+});
+//*****JWT based authentication Registration**********
+router.post('/register', u.single('myFile'), function (req, res) {
+  // Define a JSONobject for the image attributes for saving to database
+  console.log(req.file);
+  var img = fs.readFileSync(req.file.path);
+  var encode_image = img.toString('base64');
+  var finalImg = {
+    contentType: req.file.mimetype,
+    image: new Buffer.from(encode_image, 'base64')
+  };
+  let data = JSON.parse(req.body.data);
+  var hashedPassword = bcrypt.hashSync(data.psw, 8);
 
   Register.create({
-    name: req.body.name,
-    emailId: req.body.email,
-    password: hashedPassword
+    name: data.name,
+    emailId: data.email,
+    password: hashedPassword,
+    profilePhotoUrl: finalImg
   },
     function (err, user) {
-      if (err) return res.status(500).send({ msg: "Already registered" });
+      if (err) return res.status(500).send({ msg: err.message });
       // create a token
       var token = jwt.sign({ id: user._id }, config.secret, {
         expiresIn: 86400 // expires in 24 hours
@@ -31,7 +56,7 @@ router.post('/register', function (req, res) {
       res.status(200).send({ auth: true, token: token, msg: "User registed successfully" });
     });
 });
-//getting Id from JWT token
+//*************getting Id from JWT token**************
 router.get('/me', verifyToken, function (req, res, next) {
 
   Register.findById(req.userId, { password: 0 }, function (err, user) {
