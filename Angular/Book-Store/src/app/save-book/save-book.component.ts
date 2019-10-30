@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validator, Validators } from '@angular/forms';
 import { AuthServiceService } from '../services/auth-service.service';
 export interface ISomething {
@@ -14,6 +14,7 @@ export class SaveBookComponent implements OnInit {
   msg: any;
   bookInfo: FormGroup;
   isForEdit = false;
+  imageUrl="";
 
   constructor(private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -33,7 +34,7 @@ export class SaveBookComponent implements OnInit {
         author: params.author,
         publisher: params.publisher,
         pages: params.pages,
-        image_url: params.image_url,
+        image_url: this.imageUrl,
         buy_url: params.buy_url,
         price: params.price,
         count: params.count
@@ -76,4 +77,9 @@ export class SaveBookComponent implements OnInit {
       count: ['']
     });
   }
+  imageUpload(event){
+      this.imageUrl = event.target.files[0]
+      console.log(this.imageUrl,"data")
+  }
+
 }

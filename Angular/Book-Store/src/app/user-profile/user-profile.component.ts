@@ -53,10 +53,6 @@ export class UserProfileComponent implements OnInit {
     });
   }
   updateProfile(obj) {
-    // const  obj  = { ...this.registerForm.value };
-    // if(this.file) {
-    //     obj['myFile'] = this.file;
-    //   };
     this.service.updateProfile(obj).subscribe((response: any) => {
       this.message = "Profile Upadetd";
       if (localStorage.getItem('user')) {
