@@ -63,12 +63,13 @@ export class UserProfileComponent implements OnInit {
     }, (error: any) => {
       this.message = "Somthing went wrong";
     });
-
   }
   fileChanged(e){
     // this.file = e.target.files[0];
     this.profileForm.patchValue({
       myFile: e.target.files[0],
+
     })
+    // console.log("Image Url updating")
   }
 }

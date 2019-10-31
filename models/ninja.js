@@ -201,7 +201,7 @@ const bookSchema = mongoose.Schema({
         type: String
     },
     image_url: {
-        type: String
+        type: Schema.Types.Mixed
     },
     buy_url: {
         type: String

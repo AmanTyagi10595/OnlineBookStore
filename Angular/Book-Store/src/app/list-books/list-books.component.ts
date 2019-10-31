@@ -39,6 +39,7 @@ export class ListBooksComponent implements OnInit {
     this.getBooks(this.obj);
   }
   onClickEdit(book) {
+    console.log("edit button is clicked for :", book)
     this.router.navigate(['/saveBook', book._id], { queryParams: book, skipLocationChange: true });
   }
   onClickDelete(book) {

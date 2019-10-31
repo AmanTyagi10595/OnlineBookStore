@@ -15,6 +15,7 @@ export class SaveBookComponent implements OnInit {
   bookInfo: FormGroup;
   isForEdit = false;
   imageUrl="";
+  file;
 
   constructor(private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -25,26 +26,28 @@ export class SaveBookComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if (params.code) {
         this.isForEdit = true;
-      }
-      this.bookInfo.setValue({
-        title: params['title'],
-        code: params.code,
-        genre: params.genre,
-        description: params.description,
-        author: params.author,
-        publisher: params.publisher,
-        pages: params.pages,
-        image_url: this.imageUrl,
-        buy_url: params.buy_url,
-        price: params.price,
-        count: params.count
+        this.bookInfo.setValue({
+          title: params['title'],
+          code: params.code,
+          genre: params.genre,
+          description: params.description,
+          author: params.author,
+          publisher: params.publisher,
+          pages: params.pages,
+          myFile: "",
+          buy_url: params.buy_url,
+          price: params.price,
+          count: params.count
 
-      });
+        });
+      }
     });
   }
   onSubmit() {
+    let obj = { ...this.bookInfo.value };
+    delete obj.myFile;
     if (this.isForEdit == false) {
-      this.service.addBook(this.bookInfo.value).subscribe((data) => {
+      this.service.addBook(obj, this.file).subscribe((data) => {
         if (data['msg'] == "Book Added") {
           this.msg = "Book Added";
         }
@@ -53,14 +56,14 @@ export class SaveBookComponent implements OnInit {
       });
     }
     if (this.isForEdit == true) {
-      this.service.updateBookDetails(this.bookInfo.value).subscribe((data: ISomething) => {
+      let obj = { ...this.bookInfo.value };
+      delete obj.myFile;
+      this.service.updateBookDetails(obj, this.file).subscribe((data: ISomething) => {
         this.msg = data.msg;
       });
     }
 
   }
-
-
 
   initializeForm() {
     this.bookInfo = this.fb.group({
@@ -71,15 +74,13 @@ export class SaveBookComponent implements OnInit {
       author: [''],
       publisher: [''],
       pages: [''],
-      image_url: [''],
+      myFile: [''],
       buy_url: [''],
       price: [''],
       count: ['']
     });
   }
   imageUpload(event){
-      this.imageUrl = event.target.files[0]
-      console.log(this.imageUrl,"data")
+      this.file = event.target.files[0];
   }
-
 }

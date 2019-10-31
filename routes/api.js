@@ -400,18 +400,24 @@ router.get("/testing2", function (req, res) {
 });
 //+++++++++=============++++++++++++++++++++===========+++++++++++++============++++++++++++++=====+++++
 //***************Api To Add Books data *****************/
-router.post("/admine/addBooks", function (req, res) {
-  console.log(req.body, "AddBooks api run");
-  Books.findOne({ code: req.body.code }).then((result) => {
+router.post("/admine/addBooks", u.single('myFile'), function (req, res) {
+  let InputData = JSON.parse(req.body.data);
+  var img = fs.readFileSync(req.file.path);
+  var encode_image = img.toString('base64');
+
+  var finalImg = {
+    contentType: req.file.mimetype,
+    image: new Buffer.from(encode_image, 'base64')
+  };
+  InputData.image_url = finalImg;
+  Books.findOne({ code: InputData.code }).then((result) => {
     if (!result) {
-      var books = new Books(req.body);
-      books.save().then(function (data) {
-        console.log(data.toObject(), "Book Added");
-        console.log(data, "book saved");
+      var books = new Books(InputData);
+      books.save().then((data) => {
         res.status(201).send({ "msg": "Book Added" });
-      }).catch(function () {
-        console.log("Somthing went wrong, data not saved");
-        res.status(400).send({ "msg": "Somthing Wrong" });
+      }).catch((error) => {
+        console.log(error, "error");
+        res.status(400).send({ "msg": error });
       });
     }
     else {
@@ -421,15 +427,24 @@ router.post("/admine/addBooks", function (req, res) {
 
 });
 //************** Api to Update Books data  ************/
-router.post("/admine/upadteBooks", function (req, res) {
+router.post("/admine/upadteBooks",u.single('myFile'),function (req, res) {
+  let InputData = JSON.parse(req.body.data);
+  var img = fs.readFileSync(req.file.path);
+  var encode_image = img.toString('base64');
+
+  var finalImg = {
+    contentType: req.file.mimetype,
+    image: new Buffer.from(encode_image, 'base64')
+  };
+  InputData.image_url = finalImg;
   console.log("Update Books Api run");
   var date = Date.now();
-  var data = req.body;
-  Books.findOneAndUpdate({ code: req.body.code },
+  // var data = req.body;
+  Books.findOneAndUpdate({ code: InputData.code },
     {
       $set: {
-        count: data.count, price: data.price, create_date: date, title: data.title, genre: data.genre, description: data.description, author: data.author, publisher: data.publisher,
-        pages: data.pages, image_url: data.image_url, buy_url: data.buy_url
+        count: InputData.count, price: InputData.price, create_date: date, title: InputData.title, genre: InputData.genre, description: InputData.description, author: InputData.author, publisher: InputData.publisher,
+        pages: InputData.pages, image_url: InputData.image_url, buy_url: InputData.buy_url
       }
     }).then((result) => {
       res.status(200).send({ msg: "Book Updated" });

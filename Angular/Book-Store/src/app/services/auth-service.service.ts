@@ -41,12 +41,12 @@ export class AuthServiceService {
     return this.http.get(`${this.url}user/findParticularBooks/${id}`);
   }
   updateProfile(obj) {
+    // console.log(obj,"obj in Update profile")
     let httpOptions = new HttpHeaders({
       'Content-type': 'multipart/form-data'
     });
     const formdata = new FormData();
     formdata.append('myFile', obj.myFile);
-    console.log(obj.myFile, '---')
     delete obj.myFile;
     formdata.append('data', JSON.stringify(obj))
     return this.http.put(`${this.url}updateProfile`, formdata, httpOptions);
@@ -63,14 +63,26 @@ export class AuthServiceService {
   fetchCartForPay(UserId) {
     return this.http.post(`${this.url}user/fetchCartBook`, { UserId });
   }
-  addBook(obj) {
-    return this.http.post(`${this.url}admine/addBooks`, obj);
+  addBook(payload, file) {
+    let httpOptions = new HttpHeaders({
+      'Content-type': 'multipart/form-data'
+    });
+    const formdata = new FormData();
+    formdata.append('myFile', file);
+    formdata.append('data', JSON.stringify(payload));
+    return this.http.post(`${this.url}admine/addBooks`, formdata, httpOptions);
   }
   findAllBooks(obj) {
     return this.http.get(`${this.url}/admine/findBooks`, { params: { limit: obj.limit, skip: obj.skip, bookCostRange: obj.bookCostRange } });
   }
-  updateBookDetails(obj) {
-    return this.http.post(`${this.url}admine/upadteBooks`, obj);
+  updateBookDetails(payload, file) {
+    let httpOptions = new HttpHeaders({
+      'Content-type': 'multipart/form-data'
+    });
+    const formdata = new FormData();
+    formdata.append('myFile', file);
+    formdata.append('data', JSON.stringify(payload));
+    return this.http.post(`${this.url}admine/upadteBooks`, formdata, httpOptions);
   }
   deleteBook(obj) {
 

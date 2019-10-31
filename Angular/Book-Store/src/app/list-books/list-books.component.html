@@ -32,7 +32,9 @@
     <tbody>
       <tr *ngFor="let book of listBooks| aman: filterString ; let i = index">
         <td>{{i + (indexStart)}}</td>
-        <td>{{book.image}}</td>
+        <td>
+          <div *ngIf="book && book.image_url && book.image_url.contentType && book.image_url.image"><img style="width: 40px; height: 40px; border-radius: 0em;" src="data:{{book.image_url.contentType}};base64,{{book.image_url.image}}"></div>
+        </td>
         <!-- <td>{{book._id}}</td> -->
         <td>{{book.code}}</td>
         <td>{{book.title}}</td>
