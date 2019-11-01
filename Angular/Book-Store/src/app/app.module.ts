@@ -1,3 +1,4 @@
+import { FilterPipe } from './shared/pipe/filter.pipe';
 import { SanitizeHtmlPipe } from './user-profile/sanitize.html';
 import { AmanPipe } from './pipes/aman.pipe';
 import { BrowserModule } from '@angular/platform-browser';
@@ -45,7 +46,8 @@ import { MatSliderModule } from '@angular/material/slider';
     UserProfileComponent,
     SaveBookComponent,
     ListBooksComponent,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    FilterPipe
 
   ],
   imports: [

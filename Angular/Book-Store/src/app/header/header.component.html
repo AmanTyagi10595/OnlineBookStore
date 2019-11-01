@@ -7,7 +7,7 @@
       Hi {{ user.name }}
     </a>
     <a class="active" [routerLink]="['/deskBoard']">Home</a>
-    <a href="#contact">Contact</a>
+    <a [routerLink]="['/listBooks']">Books</a>
     <a [routerLink]="['/addToCart']">Cart</a>
     <a (click)="logOut()">LogOut</a>
   </div>

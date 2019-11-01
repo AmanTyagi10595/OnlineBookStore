@@ -6,8 +6,10 @@
       <div class="col-md-9">
         <div class="row">
           <div class="image">
-            <div class="imgView"> <img src="https://via.placeholder.com/150" alt="img"></div>
-            <div *ngIf="bookInfo">
+            <div *ngIf="bookInfo" class="forImage">
+              <div class="imgView">
+                <img src="data:{{bookInfo.image_url.contentType}};base64,{{bookInfo.image_url.image}}">
+              </div>
               <p>
                 Price: <span>{{bookInfo?.price }}</span> <br />
                 Title: <span>{{bookInfo?.title }}</span> <br />
@@ -15,8 +17,12 @@
                 Details: <span>{{bookInfo?.description }}</span> <br />
               </p>
               <!-- [queryParams]="bookInfo" -->
-              <button type="button" class="btn btn-primary" (click)=addToCartApi(bookInfo)>Add To Cart</button>
-              <button type="button" class="btn btn-primary">Buy Now</button>
+              <span>
+                <button type="button" class="btn btn-primary" (click)=addToCartApi(bookInfo)>Add To Cart</button>
+              </span>
+              <span>
+                <button type="button" class="btn btn-primary">Buy Now</button>
+              </span>
             </div>
           </div>
         </div>

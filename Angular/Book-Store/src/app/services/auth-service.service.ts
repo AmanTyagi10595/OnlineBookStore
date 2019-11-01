@@ -32,10 +32,9 @@ export class AuthServiceService {
     });
     const formdata = new FormData();
     formdata.append('myFile', obj.myFile);
-    console.log(obj.myFile, '---')
     delete obj.myFile;
     formdata.append('data', JSON.stringify(obj))
-    return this.http.post(`${this.url}auth/register`, formdata, httpOptions);
+    return this.http.post(`${this.url}auth/register`, formdata, {headers: httpOptions});
   }
   bookDetail(id) {
     return this.http.get(`${this.url}user/findParticularBooks/${id}`);
@@ -49,7 +48,7 @@ export class AuthServiceService {
     formdata.append('myFile', obj.myFile);
     delete obj.myFile;
     formdata.append('data', JSON.stringify(obj))
-    return this.http.put(`${this.url}updateProfile`, formdata, httpOptions);
+    return this.http.put(`${this.url}updateProfile`, formdata, {headers: httpOptions});
   }
   addToCartApi(obj) {
     return this.http.post(`${this.url}user/addToCart`, obj);
@@ -70,7 +69,7 @@ export class AuthServiceService {
     const formdata = new FormData();
     formdata.append('myFile', file);
     formdata.append('data', JSON.stringify(payload));
-    return this.http.post(`${this.url}admine/addBooks`, formdata, httpOptions);
+    return this.http.post(`${this.url}admine/addBooks`, formdata, {headers: httpOptions});
   }
   findAllBooks(obj) {
     return this.http.get(`${this.url}/admine/findBooks`, { params: { limit: obj.limit, skip: obj.skip, bookCostRange: obj.bookCostRange } });
@@ -82,7 +81,7 @@ export class AuthServiceService {
     const formdata = new FormData();
     formdata.append('myFile', file);
     formdata.append('data', JSON.stringify(payload));
-    return this.http.post(`${this.url}admine/upadteBooks`, formdata, httpOptions);
+    return this.http.post(`${this.url}admine/upadteBooks`, formdata, {headers: httpOptions});
   }
   deleteBook(obj) {
 

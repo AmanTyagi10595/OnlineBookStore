@@ -22,6 +22,8 @@ export class DeskBoardComponent implements OnInit {
 
     this.services.deskboardBook().subscribe((response: any) => {
       this.datas = response.res;
+
+      // console.log(response.res)
     })
   }
 }
