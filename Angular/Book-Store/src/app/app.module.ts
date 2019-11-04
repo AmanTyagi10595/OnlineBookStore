@@ -1,3 +1,5 @@
+import { MatSelectModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material';
 import { FilterPipe } from './shared/pipe/filter.pipe';
 import { SanitizeHtmlPipe } from './user-profile/sanitize.html';
 import { AmanPipe } from './pipes/aman.pipe';
@@ -27,6 +29,8 @@ import { SaveBookComponent } from './save-book/save-book.component';
 import { ListBooksComponent } from './list-books/list-books.component';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
 import { MatSliderModule } from '@angular/material/slider';
+
+
 
 @NgModule({
   declarations: [
@@ -59,7 +63,12 @@ import { MatSliderModule } from '@angular/material/slider';
     HttpClientModule,
     MatPaginatorModule,
     MatTableModule,
-    MatSliderModule
+    MatSliderModule,
+    MatFormFieldModule,
+    MatSelectModule
+
+
+
   ],
   providers: [
     AuthServiceService,

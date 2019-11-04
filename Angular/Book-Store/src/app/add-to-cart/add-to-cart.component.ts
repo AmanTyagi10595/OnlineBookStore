@@ -107,5 +107,6 @@ export class AddToCartComponent implements OnInit {
     },
       (error) => {
       })
+      this.fetchCartBook();
   }
 }

@@ -6,16 +6,64 @@
 
 
 <div class="deskBord">
-  <div class="container">
+  <div class="container forLeftMargin">
     <div class=row>
       <div class="col-md-3">
+        <div class="sidenav forBox">
+          <div class="sideMargin">
+            <div class="sdf subSideMargin">
+              <section class="ssf">
+                <div class="adf2">
+                  <span>Filters</span>
+                </div>
+              </section>
+            </div>
+            <hr>
+            <div class="subSideMargin">
+              <section>
+                <div>
+                  <span>CATEGORIES</span>
+                </div>
+                <h4>Basic mat-select</h4>
+                <mat-form-field>
+                  <mat-label>Favorite food</mat-label>
+                  <mat-select>
+                    <mat-option *ngFor="let food of foods" [value]="foods">
+                      {{food.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+
+                <!-- <div class="dropdown ">
+                  <button class="dropbtn">Dropdown</button>
+                  <div class="dropdown-content">
+                    <a title="books" href="#">Class 6</a>
+                    <a href="#">Class 7</a>
+                    <a href="#">Class 8</a>
+                    <a href="#">Class 9</a>
+                    <a href="#">Class 10</a>
+                    <a href="#">Class 11</a>
+                    <a href="#">Class 12</a>
+
+                    <a class="_3XS1AH _32ZSYo" title="Books" href="/books/pr?sid=bks&amp;p[]=facets.serviceability%5B%5D%3Dtrue&amp;otracker=categorytree">Books</a>
+
+                  </div>
+                </div> -->
+              </section>
+            </div>
+            <hr style="margin-top: 7px;">
+          </div>
+        </div>
+
       </div>
-      <div class="col-md-9">
+      <div class="col-md-9 forBox">
         <div class="row">
           <div class="col-md-4" *ngFor="let data of datas" routerLink="/bookDetail/{{data._id}}">
             <div class="image" *ngIf="data && data.image_url && data.image_url.contentType && data.image_url.image">
               <div class="imgView">
-                <img src="data:{{data.image_url.contentType}};base64,{{data.image_url.image}}">
+                <!-- <img src="data:{{data.image_url.contentType}};base64,{{data.image_url.image}}"> -->
+                <img src="https://dummyimage.com/200x300/cccccc/040404.png">
               </div>
               <div>
                 <p>

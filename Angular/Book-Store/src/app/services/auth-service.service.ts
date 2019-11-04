@@ -51,6 +51,7 @@ export class AuthServiceService {
     return this.http.put(`${this.url}updateProfile`, formdata, {headers: httpOptions});
   }
   addToCartApi(obj) {
+    console.log("addto cart api auth .service", obj)
     return this.http.post(`${this.url}user/addToCart`, obj);
   }
   fetchCartBook(UserId) {

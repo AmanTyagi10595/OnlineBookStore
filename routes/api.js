@@ -427,7 +427,7 @@ router.post("/admine/addBooks", u.single('myFile'), function (req, res) {
 
 });
 //************** Api to Update Books data  ************/
-router.post("/admine/upadteBooks",u.single('myFile'),function (req, res) {
+router.post("/admine/upadteBooks", u.single('myFile'), function (req, res) {
   let InputData = JSON.parse(req.body.data);
   var img = fs.readFileSync(req.file.path);
   var encode_image = img.toString('base64');
@@ -466,10 +466,9 @@ router.delete("/admine/deleteBook", function (req, res) {
 });
 //*************** Api to find all books for the User(with limits) *********/
 router.get("/user/findBooks", function (req, res) {
-  console.log("FindAll Books Api run");
   Books.find({}, { count: 0 }).then((result) => {
     res.send({ res: result });
-  });
+  }).catch(e => res.status(500).json({ error: e.message }))
 });
 //*************** Api to find all books for the Admine(with limits) *********/
 router.get("/admine/findBooks", function (req, res) {
@@ -486,14 +485,21 @@ router.get("/admine/findBooks", function (req, res) {
 });
 //*************** Api to find particular book with its code by user **************/
 router.get("/user/findParticularBooks/:id", function (req, res) {
-  console.log("FindAll Books Api run");
+  console.log("find particular book with id Aapi run")
   Books.findOne({ _id: req.params.id }).select('-__v').then((result) => {
+    // console.log(result,"response from find particular book")
+    res.send(result);
+  });
+});
+//*************** Api to find  books with its genre **************/
+router.get("/user/findBookByGenre/:genre", function (req, res) {
+  console.log("find bbok according to genre");
+  Books.find({ genre: req.params.genre }).then((result) => {
     res.send(result);
   });
 });
 //*************** Api to find particular book with its code by Admine **************/
 router.get("/admine/findParticularBooks", function (req, res) {
-  console.log("FindAll Books Api run, Admine");
   Books.find({ code: req.body.code }).then((result) => {
     res.send(result);
   });
@@ -549,7 +555,7 @@ router.get("/admine/findParticularBooks", function (req, res) {
 //   //  });
 // });
 router.post("/user/addToCart", function (req, res) {
-  // console.log(req.body, "datatatattatatatatatattatata");
+  console.log(req.body, "datatatattatatatatatattatata");
   let flag = 0;
   let saveBook = {
     book_count: req.body.book.count,

@@ -9,6 +9,11 @@ import { AuthServiceService } from '../services/auth-service.service';
 export class DeskBoardComponent implements OnInit {
   isLogged: any;
   datas;
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'}
+  ];
   constructor(private services: AuthServiceService) {
 
   }

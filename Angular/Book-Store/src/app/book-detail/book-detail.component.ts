@@ -27,15 +27,30 @@ export class BookDetailComponent implements OnInit {
   }
   addToCartApi(book) {
     let user = JSON.parse(localStorage.getItem("user"));
+    delete user.profilePhotoUrl
     let dataToSend = {
-      "book": book,
-      "user": user
+     "book": {
+        "count": book.count,
+        "price": book.price,
+        "code": book.code,
+        "title": book.title,
+        "_id":book._id
+      },
+      "user": {
+        "_id":user._id,
+      "emailId":user.emailId
+    }
     };
+    // console.log("Add to cart api run", dataToSend)
     if (user) {
       this.service.addToCartApi(dataToSend).subscribe((data) => {
         this.router.navigate(['/addToCart']);
       }, (error) => {
+        console.log("error-->", error)
       });
+    }
+    else{
+      console.log("loging please");
     }
   }
 }
