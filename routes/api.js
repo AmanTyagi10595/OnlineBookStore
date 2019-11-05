@@ -465,10 +465,26 @@ router.delete("/admine/deleteBook", function (req, res) {
   });
 });
 //*************** Api to find all books for the User(with limits) *********/
-router.get("/user/findBooks", function (req, res) {
-  Books.find({}, { count: 0 }).then((result) => {
-    res.send({ res: result });
-  }).catch(e => res.status(500).json({ error: e.message }))
+router.post("/user/findBooks", function (req, res) {
+  console.log("---------------", req.body);
+  if (!req.body.className) {
+    console.log("----if------", req.body);
+    Books.find({ price: { $gte: (req.body.minRange), $lte: (req.body.maxRange) } }, { count: 0 }).then((result) => {
+      res.send({ res: result });
+    }).catch(e => res.status(500).json({ error: e.message }));
+  } else {
+    console.log("----else------", req.body);
+
+    Books.find({ genre: req.body.className, price: { $gte: (req.body.minRange), $lte: (req.body.maxRange) } }).then((result) => {
+      res.send({ res: result });
+    }).catch(e => res.status(500).json({ error: e.message }));
+  }
+
+});
+//*************** Api to find all books for the User(with limits) *********/
+router.post("/user/booksWithCostRange", function (req, res) {
+  console.log("---------------", req.body.class);
+
 });
 //*************** Api to find all books for the Admine(with limits) *********/
 router.get("/admine/findBooks", function (req, res) {
@@ -583,6 +599,9 @@ router.post("/user/addToCart", function (req, res) {
             }).catch(err => {
               res.status(500).send(err);
             });
+        }
+        else {
+          res.status(400).send({ "msg": "Book already in cart" });
         }
       }, 1000);
     }

@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 })
 export class BookDetailComponent implements OnInit {
   bookInfo: any;
+  message:string="";
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -27,30 +28,31 @@ export class BookDetailComponent implements OnInit {
   }
   addToCartApi(book) {
     let user = JSON.parse(localStorage.getItem("user"));
-    delete user.profilePhotoUrl
-    let dataToSend = {
-     "book": {
-        "count": book.count,
-        "price": book.price,
-        "code": book.code,
-        "title": book.title,
-        "_id":book._id
-      },
-      "user": {
-        "_id":user._id,
-      "emailId":user.emailId
-    }
-    };
-    // console.log("Add to cart api run", dataToSend)
     if (user) {
+      let dataToSend = {
+        "book": {
+           "count": book.count,
+           "price": book.price,
+           "code": book.code,
+           "title": book.title,
+           "_id":book._id
+         },
+         "user": {
+           "_id":user._id,
+         "emailId":user.emailId
+       }
+       };
       this.service.addToCartApi(dataToSend).subscribe((data) => {
         this.router.navigate(['/addToCart']);
       }, (error) => {
-        console.log("error-->", error)
+        console.log("error-->", error.error['msg'])
+this.message ="Book already in Your cart";
       });
     }
     else{
       console.log("loging please");
+      this.message ="login please";
+
     }
   }
 }

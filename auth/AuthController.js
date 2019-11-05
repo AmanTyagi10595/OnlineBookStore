@@ -61,7 +61,7 @@ router.get('/me', verifyToken, function (req, res, next) {
 
   Register.findById(req.userId, { password: 0 }, function (err, user) {
     if (err) return res.status(500).send("There was a problem finding the user.");
-    if (!user) return res.status(404).send("User not registered.");
+    if (!user) return res.status(404).send({ msg: "User not registered." });
 
     res.status(200).send(user);
   });
@@ -71,7 +71,7 @@ router.get('/me', verifyToken, function (req, res, next) {
 router.post('/login', function (req, res) {
   Register.findOne({ emailId: req.body.email }, function (err, user) {
     if (err) return res.status(500).send('Error on the server');
-    if (!user) return res.status(404).send({ msg: 'No user found' });
+    if (!user) return res.status(401).send({ msg: 'No user found' });
 
     var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
     if (!passwordIsValid) return res.status(401).send({ auth: false, token: null, msg: "wrong password" });
@@ -79,7 +79,6 @@ router.post('/login', function (req, res) {
     var token = jwt.sign({ id: user._id }, config.secret, {
       expiresIn: 86400 // expires in 24 hours
     });
-
     res.status(200).send({ auth: true, token, user });
   });
   // res.send({ msg: "Login Api worked by req from angular" });

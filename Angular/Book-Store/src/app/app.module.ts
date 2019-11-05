@@ -29,7 +29,7 @@ import { SaveBookComponent } from './save-book/save-book.component';
 import { ListBooksComponent } from './list-books/list-books.component';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
 import { MatSliderModule } from '@angular/material/slider';
-
+import { Ng5SliderModule } from 'ng5-slider';
 
 
 @NgModule({
@@ -65,9 +65,8 @@ import { MatSliderModule } from '@angular/material/slider';
     MatTableModule,
     MatSliderModule,
     MatFormFieldModule,
-    MatSelectModule
-
-
+    MatSelectModule,
+    Ng5SliderModule
 
   ],
   providers: [

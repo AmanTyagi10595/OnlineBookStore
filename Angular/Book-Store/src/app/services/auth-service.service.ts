@@ -23,8 +23,12 @@ export class AuthServiceService {
   updatePassword(obj) {
     return this.http.put(`${this.url}resetPassword2`, obj, httpOptions);
   }
-  deskboardBook() {
-    return this.http.get(`${this.url}user/findBooks`, httpOptions);
+  deskboardBook(obj) {
+    console.log("::::::::::",obj)
+    return this.http.post(`${this.url}user/findBooks`,obj, httpOptions);
+  }
+  booksWithCostRange(obj){
+    return this.http.post(`${this.url}user/booksWithCostRange`,obj, httpOptions);
   }
   registerUser(obj) {
     let httpOptions = new HttpHeaders({
