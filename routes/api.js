@@ -91,6 +91,111 @@ const authcheck = function (req, res, next) {
     next();
   }
 };
+
+//========================= testing
+var mammoth = require("mammoth");
+
+module.exports.Filedocsread = (req, res) => {
+  upload(req, res, (err) => {
+    var options = {
+      convertImage: mammoth.images.imgElement(function (image) {
+        return image.read("base64").then(function (imageBuffer) {
+          // console.log("dsjsdjs",imageBuffer)
+          return {
+            src: "data:" + image.contentType + ";base64," + imageBuffer
+          };
+        });
+      })
+    };
+    mammoth.extractRawText({ path: req.files[0].path }, options)
+      .then(function (result) {
+        var text = result.value; // The raw text  
+        console.log("hey data", text)
+
+        docTableContent(text);
+      })
+      .done();
+  })
+
+}
+
+
+
+var docTableContent = (text) => {
+  let array = [...text.matchAll("TABLE OF CONTENTS")];
+  var pos;
+  var jam = [];
+  var ham = [];
+  var arr = [];
+  array.forEach((d, i) => {
+    var tcn = array[i][0]
+    pos = array[i].index
+  })
+  var startPostion = text.indexOf("1.0", pos);
+  var EndPostion = text.indexOf("32", startPostion);
+  var getString = text.slice(startPostion, EndPostion);
+  var newarr = getString.split('\n\n');
+  let toc = [];
+  let toc1 = [];
+  let toc3 = [];
+  let value = '';
+  for (let i = 0; i <= newarr.length; i++) {
+    let key = '';
+
+    let substr = newarr[i];
+    let key2 = '';
+    if (substr) {
+      for (let k = 0; k < substr.length; k++) {
+        var patt1 = /[0-9]/g;
+        var patt2 = /[1-9]/g;
+        var result = newarr[i][k].match(patt1);
+        if (result || newarr[i][k] === '.') {
+          key += newarr[i][k]
+        }
+        key2 = key;
+        if (key2.includes(`.${patt2}`)) {
+          console.log(key2, "asdnsajhda")
+        }
+        if (newarr[i][k].match(/^[A-Za-z]+$/)) {
+          value = newarr[i].substr(key.length)
+          break;
+        }
+      }
+      toc[key] = value
+      if (key.includes('.0')) {
+        toc1[key] = value = { name: value, };
+      }
+    }
+  }
+  Object.keys(toc).forEach((h, l) => {
+  })
+  Object.keys(toc1).forEach((a, b) => {
+    Object.keys(toc).forEach((h, l) => {
+      if (h.slice(0, 2) == a.slice(0, 2)) {
+        arr.push(arr[h] = toc[h])
+      }
+      // arr.push({name:toc1[a]['name'],sub:toc[h]})
+    })
+    toc3[a] = ({ name: toc1[a]['name'], sub: arr })
+    arr = [];
+    // toc3[a]=arr;
+  })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //************ Passport's google social login starts here ***********/
 router.get('/google',
   passport.authenticate('google', { scope: ['profile', "email"] }));
@@ -468,16 +573,33 @@ router.delete("/admine/deleteBook", function (req, res) {
 router.post("/user/findBooks", function (req, res) {
   console.log("---------------", req.body);
   if (!req.body.className) {
-    console.log("----if------", req.body);
-    Books.find({ price: { $gte: (req.body.minRange), $lte: (req.body.maxRange) } }, { count: 0 }).then((result) => {
-      res.send({ res: result });
-    }).catch(e => res.status(500).json({ error: e.message }));
-  } else {
-    console.log("----else------", req.body);
+    console.log("----if------");
 
-    Books.find({ genre: req.body.className, price: { $gte: (req.body.minRange), $lte: (req.body.maxRange) } }).then((result) => {
-      res.send({ res: result });
-    }).catch(e => res.status(500).json({ error: e.message }));
+    let promises = [
+      Books.find({ price: { $gte: (req.body.minRange), $lte: (req.body.maxRange) } }).limit(req.body.limit).skip(req.body.skip),
+      Books.find().countDocuments()
+    ];
+    Promise.all(promises).then(data => {
+      res.status(200).json({ result: data[0], count: data[1] });
+    }).catch(e => res.status(500).json({ error1: e[0].message, error2: e[1].message }));
+
+    // Books.find({ price: { $gte: (req.body.minRange), $lte: (req.body.maxRange) } }, { count: 0 }).then((result) => {
+    //   res.send({ res: result });
+    // }).catch(e => res.status(500).json({ error: e.message }));
+  } else {
+    console.log("----else------");
+
+    let promises = [
+      Books.find({ genre: req.body.className, price: { $gte: (req.body.minRange), $lte: (req.body.maxRange) } }),
+      Books.find().count()
+    ];
+    Promise.all(promises).then(data => {
+      res.status(200).json({ result: data[0], count: data[1] });
+    }).catch(e => res.status(500).json({ error1: e[0].message, error2: e[1].message }));
+
+    // Books.find({ genre: req.body.className, price: { $gte: (req.body.minRange), $lte: (req.body.maxRange) } }).then((result) => {
+    //   res.send({ res: result });
+    // }).catch(e => res.status(500).json({ error: e.message }));
   }
 
 });
