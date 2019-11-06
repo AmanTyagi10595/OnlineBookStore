@@ -96,11 +96,11 @@
       <div class="forPagination">
         <nav>
           <ul class="pagination">
-            <li class="page-item page-link" value="previous" (click)=onPaginatorClick(value)>Previous</li>
+            <li class="page-item page-link" (click)="onPaginatorClick('previous')">Previous</li>
             <Span *ngFor="let page of numberOfPages; index as i">
-              <li class="page-item page-link" (click)=onPaginatorClick(i)>{{i+1}}</li>
+              <li class="page-item page-link" (click)="onPaginatorClick(i)">{{i+1}}</li>
             </Span>
-            <li class="page-item page-link" (click)=onPaginatorClick(n)>Next</li>
+            <li class="page-item page-link" (click)="onPaginatorClick('next')">Next</li>
           </ul>
         </nav>
       </div>

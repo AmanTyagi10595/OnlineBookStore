@@ -62,11 +62,16 @@ export class DeskBoardComponent implements OnInit {
     this.deskboardBook(this.obj);
   }
   onPaginatorClick(page) {
-    if (page) {
-      this.obj.skip = page * this.limit;
+    console.log(page);
+    if (page === "previous") {
+      this.obj.skip = this.obj.skip - this.limit;
+      this.deskboardBook(this.obj);
+    } else if (page === "next") {
+      this.obj.skip = this.obj.skip + this.limit;
       this.deskboardBook(this.obj);
     } else {
-      this.obj.skip = this.obj.skip - 1;
+      this.obj.skip = page * this.limit;
+      this.deskboardBook(this.obj);
     }
   }
 }
