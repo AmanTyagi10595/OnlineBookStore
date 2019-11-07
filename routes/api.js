@@ -26,6 +26,12 @@ const stripe = require("stripe")("sk_test_FnigeKJED52GMNL7tDNFpEud00CYI1iDej");
 var excel = require('excel4node');
 var json2csv = require('json2csv').parse;
 var json2xls = require('json2xls');
+var paypal = require('paypal-rest-sdk');
+const Nexmo = require('nexmo');
+const nexmo = new Nexmo({
+  apiKey: 'aaac3d79',
+  apiSecret: 'Z0pobZzI6D4aMSid',
+});
 // var mongoXlsx = require('mongo-xlsx');
 
 // router.get("/datawww", function(req, res){
@@ -54,8 +60,14 @@ var s = multer.diskStorage({
 const u = multer({
   storage: s
 });
+//************* Paypal configuration*/
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AU4zmfZ9kbqz7pijnthWLUECRenygq62TnF2XoGtY8QdCgO6y4wz',
+  'client_secret': 'EP-juRWp39jaRF2kmheEcMZK6MiF9pD_MYgSWivQFHChDJxWqaZxpPjQbumiiod-cjnECSl3DYiaChyr'
+});
 
-
+//=================
 router.get("/JsonToCsv", async function (req, res) {
   var data = await Register.find({});
   // res.send(data);
@@ -91,110 +103,6 @@ const authcheck = function (req, res, next) {
     next();
   }
 };
-
-//========================= testing
-var mammoth = require("mammoth");
-
-module.exports.Filedocsread = (req, res) => {
-  upload(req, res, (err) => {
-    var options = {
-      convertImage: mammoth.images.imgElement(function (image) {
-        return image.read("base64").then(function (imageBuffer) {
-          // console.log("dsjsdjs",imageBuffer)
-          return {
-            src: "data:" + image.contentType + ";base64," + imageBuffer
-          };
-        });
-      })
-    };
-    mammoth.extractRawText({ path: req.files[0].path }, options)
-      .then(function (result) {
-        var text = result.value; // The raw text  
-        console.log("hey data", text)
-
-        docTableContent(text);
-      })
-      .done();
-  })
-
-}
-
-
-
-var docTableContent = (text) => {
-  let array = [...text.matchAll("TABLE OF CONTENTS")];
-  var pos;
-  var jam = [];
-  var ham = [];
-  var arr = [];
-  array.forEach((d, i) => {
-    var tcn = array[i][0]
-    pos = array[i].index
-  })
-  var startPostion = text.indexOf("1.0", pos);
-  var EndPostion = text.indexOf("32", startPostion);
-  var getString = text.slice(startPostion, EndPostion);
-  var newarr = getString.split('\n\n');
-  let toc = [];
-  let toc1 = [];
-  let toc3 = [];
-  let value = '';
-  for (let i = 0; i <= newarr.length; i++) {
-    let key = '';
-
-    let substr = newarr[i];
-    let key2 = '';
-    if (substr) {
-      for (let k = 0; k < substr.length; k++) {
-        var patt1 = /[0-9]/g;
-        var patt2 = /[1-9]/g;
-        var result = newarr[i][k].match(patt1);
-        if (result || newarr[i][k] === '.') {
-          key += newarr[i][k]
-        }
-        key2 = key;
-        if (key2.includes(`.${patt2}`)) {
-          console.log(key2, "asdnsajhda")
-        }
-        if (newarr[i][k].match(/^[A-Za-z]+$/)) {
-          value = newarr[i].substr(key.length)
-          break;
-        }
-      }
-      toc[key] = value
-      if (key.includes('.0')) {
-        toc1[key] = value = { name: value, };
-      }
-    }
-  }
-  Object.keys(toc).forEach((h, l) => {
-  })
-  Object.keys(toc1).forEach((a, b) => {
-    Object.keys(toc).forEach((h, l) => {
-      if (h.slice(0, 2) == a.slice(0, 2)) {
-        arr.push(arr[h] = toc[h])
-      }
-      // arr.push({name:toc1[a]['name'],sub:toc[h]})
-    })
-    toc3[a] = ({ name: toc1[a]['name'], sub: arr })
-    arr = [];
-    // toc3[a]=arr;
-  })
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //************ Passport's google social login starts here ***********/
 router.get('/google',
@@ -716,6 +624,23 @@ router.post("/user/addToCart", function (req, res) {
           console.log("inside  function");
           cart.findOneAndUpdate({ "UserId": req.body.user._id }, { "$push": { "book": saveBook } },
             { "new": true }).then((data) => {
+              // ********To send SMS or Message to Mobile************
+              // const from = 'OnlineBook Store';
+              // const to = '918920401676';//For free only registered number with nexmo are allowed.
+              // const text = 'Hi this book has been added in your cart';
+              // console.log("outside sms method")
+              // nexmo.message.sendSms(from, to, text, (err, responseData) => {
+              //   console.log("inside sms method")
+              //   if (err) {
+              //     console.log("error in sending message:", err);
+              //   } else {
+              //     if (responseData.messages[0]['status'] === "0") {
+              //       console.log("Message sent successfully.");
+              //     } else {
+              //       console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
+              //     }
+              //   }
+              // })
               console.log("book updated in cart");
               res.status(200).send(data);
             }).catch(err => {
@@ -868,19 +793,7 @@ router.get("/admine/cityWiseNeed", function (req, res) {
   }).catch(function (err) {
     console.log(err, "Something Went wrong");
   });
-  // cart.find({"address":"Meerut"}).then((result)=>{
-  //   var count =0;
-  //   result.comments.forEach((r)=>{
-  //     r.findOne({book_code:"M124"}).then((R)=>{
-  //      count = count + R.book_Count;
-  //     });
-  //   });
-  //   console.log(count);
-  // }).catch((err)=>{
-  //   console.log(err);
-  // }); 
 });
-
 app.use('/api/auth', AuthController);
 
 module.exports = router;

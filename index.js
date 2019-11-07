@@ -51,6 +51,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // connect to mongodb
+// mongoose.connect('mongodb+srv://aman:aman@aman-1u4xs.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 mongoose.connect('mongodb://localhost/ninjago', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 mongoose.Promise = global.Promise;
 

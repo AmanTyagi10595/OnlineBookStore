@@ -9,10 +9,10 @@ import { Options } from "ng5-slider";
 export class DeskBoardComponent implements OnInit {
   isLogged: any;
   datas;
-  limit: Number = 10;
+  limit = 10;
   numberOfPages = [];
-  minValue: number = 10;
-  maxValue: number = 1000;
+  minValue = 10;
+  maxValue = 1000;
   options: Options = {
     floor: 0,
     ceil: 2000
