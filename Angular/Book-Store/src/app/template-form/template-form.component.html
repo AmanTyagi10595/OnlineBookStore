@@ -1,0 +1,25 @@
+<form #form="ngForm" (submit)="logForm(form.value)">
+  <fieldset ngModelGroup="name">
+    <label>Firstname:</label>
+    <input type="text" name="firstname" [(ngModel)]="firstname" required>
+    You entered{{firstname}}
+    <br>
+    <label>Lastname:</label>
+    <input type="text" name="lastname" [(ngModel)]="lastname" minlength="3">
+  </fieldset>
+  <br>
+  <fieldset ngModelGroup="address">
+    <label>Street:</label>
+    <input type="text" name="street" [(ngModel)]="street" pattern="[A-Za-z]{5}">
+    <br>
+    <label>Zip:</label>
+    <input type="text" name="zip" [(ngModel)]='zip'>
+    <br>
+    <label>City:</label>
+    <input type="text" name="city" [(ngModel)]="city">
+  </fieldset>
+  <br>
+  {{form.value}}
+  {{form.status}}
+  <button type="submit">Submit</button>
+</form>
