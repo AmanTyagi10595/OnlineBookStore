@@ -9,24 +9,51 @@
     Last Name:
     <input type="text" formControlName="lastName">
   </label>
-  {{profileForm.value|json}}
-  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
 </form>
 <br>
-<form [formGroup]="profileForm2" (ngSubmit)="onSubmit()">
 
-  <label>
-    First Name:
-    <input type="text" formControlName="firstName">
-  </label>
-  <br>
-  <label>
-    Last Name:
-    <input type="text" formControlName="lastName">
-  </label>
-  {{profileForm2.value|json}}
-  {{profileForm2.status}}
-  <div *ngIf="profileForm2.get('firstName').errors.required && ">Required</div>
-  <button type="submit" [disabled]="!profileForm2.valid">Submit</button>
-  <a [routerLink]="['/templateForm']">Template form</a>
-</form>
+=================
+
+<div class="forFormBody">
+  <form [formGroup]="profileForm2" (ngSubmit)="onSubmit()">
+    <label>
+      First Name:
+      <input class="form-control" type="text" formControlName="firstName2" name="firstName2">
+      <span class="forAlert" *ngIf="!!profileForm2.get('firstName2').errors?.required && profileForm2.get('firstName2').touched "> Name is required.</span>
+      <span class="forAlert" *ngIf="!!profileForm2.get('firstName2').errors?.minlength && profileForm2.get('firstName2').touched "> Minnimum lenth is 2</span>
+      <span class="forAlert" *ngIf="!!profileForm2.get('firstName2').errors?.maxlength"> Max length is 5</span>
+    </label>
+
+    <!-- {{profileForm2.get('firstName2').errors|json}} -->
+    <!-- {{profileForm2.valid}} -->
+    <br>
+    <label>
+      Last Name:
+      <input class="form-control" type="text" formControlName="lastName2" name="lastName2">
+      <span class="forAlert" *ngIf="!!profileForm2.get('lastName2').errors?.required && profileForm2.get('lastName2').touched"> LastName is required.</span>
+    </label>
+    <br>
+    <label>
+      Email Address:
+      <input class="form-control" type="text" formControlName="email2" name="email2" (blur)="onFocusOut('emailBlur')">
+      <!-- {{profileForm2.get('email2').errors|json}} -->
+      <span class="forAlert" *ngIf="!!profileForm2.get('email2').errors?.email && profileForm2.get('firstName2').untouched && emailBlur "> Not a valid email address.</span>
+    </label>
+    <br>
+    <label>
+      Password:
+      <input class="form-control" type="password" formControlName="password2" name="password2" (blur)="onFocusOut('passBlur')">
+      <span class="forAlert" *ngIf="!!profileForm2.get('password2').errors?.pattern && profileForm2.get('password2').touched && passBlur"> At list 5 char, one aplha, number, speChar</span>
+
+    </label>
+    <!-- {{profileForm2.get('password2').errors|json}} -->
+
+    <br>
+    <!-- {{profileForm2.get('lastName2').errors|json}} -->
+
+    <br>
+    <button type="submit" [disabled]="!profileForm2.valid">Submit</button>
+    <a [routerLink]="['/templateForm']">Template form</a>
+    <!-- {{ profileForm2.status | json}} -->
+  </form>
+</div>>
