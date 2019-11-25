@@ -32,6 +32,7 @@ import { MatSliderModule } from "@angular/material/slider";
 import { Ng5SliderModule } from "ng5-slider";
 import { PracticFormsComponent } from "./practic-forms/practic-forms.component";
 import { TemplateFormComponent } from "./template-form/template-form.component";
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { TemplateFormComponent } from "./template-form/template-form.component";
     SanitizeHtmlPipe,
     FilterPipe,
     PracticFormsComponent,
-    TemplateFormComponent
+    TemplateFormComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

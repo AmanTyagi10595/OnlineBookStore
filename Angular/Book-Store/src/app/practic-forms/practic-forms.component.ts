@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { AbstractControl } from "@angular/forms";
 import {
   FormControl,
   FormGroup,
@@ -46,19 +47,25 @@ export class PracticFormsComponent implements OnInit {
       Validators.pattern(
         "(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!#^~%*?&,.<>\"'\\;:{\\}\\[\\]\\|\\+\\-\\=\\_\\)\\(\\)\\`\\/\\\\\\]])[A-Za-z0-9d$@].{4,}"
       )
-    ]
+    ],
+    phone2: ["", [this.ValidateUrl]]
   });
 
   onFocusOut(data) {
     console.log("++_+_+", data);
     if (data == "emailBlur") {
       this.emailBlur = true;
-    } else if (data == "passBlur");
+    }
+    // else if (data == "passBlur");
     {
       this.passBlur = true;
     }
   }
-  // f() {
-  //   return this.profileForm2.controls;
-  // }
+  ValidateUrl(control: AbstractControl) {
+    if (!(control.value.length == 10)) {
+      return { validUrl: true };
+    } else {
+      return null;
+    }
+  }
 }

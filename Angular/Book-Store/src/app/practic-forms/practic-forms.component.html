@@ -46,6 +46,14 @@
       <span class="forAlert" *ngIf="!!profileForm2.get('password2').errors?.pattern && profileForm2.get('password2').touched && passBlur"> At list 5 char, one aplha, number, speChar</span>
 
     </label>
+    <br>
+    <label>
+      PhoneNo:
+      <input class="form-control" type="text" formControlName="phone2" name="phone2">
+      <!-- <span class="forAlert" *ngIf="!!profileForm2.get('password2').errors?.ValidateUrl && profileForm2.get('password2').touched">10numbers</span> -->
+      {{profileForm2.get('phone2').errors|json}}
+
+    </label>
     <!-- {{profileForm2.get('password2').errors|json}} -->
 
     <br>

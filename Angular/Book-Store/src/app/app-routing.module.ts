@@ -14,11 +14,13 @@ import { SaveBookComponent } from "./save-book/save-book.component";
 import { ListBooksComponent } from "./list-books/list-books.component";
 import { PracticFormsComponent } from "./practic-forms/practic-forms.component";
 import { TemplateFormComponent } from "./template-form/template-form.component";
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: LoginComponent
+    component: LoginComponent,
+    pathMatch: "full"
   },
   {
     path: "practiceForm",
@@ -75,6 +77,10 @@ const routes: Routes = [
   {
     path: "register",
     component: RegisterComponent
+  },
+  {
+    path: "**",
+    component: PageNotFoundComponent
   }
 ];
 
