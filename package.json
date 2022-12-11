@@ -25,7 +25,7 @@
     "ejs": "^2.6.2",
     "env-cmd": "^9.0.3",
     "excel4node": "^1.7.2",
-    "express": "^4.14.1",
+    "express": "^4.17.3",
     "express-session": "^1.16.2",
     "google-auth-library": "^0.12.0",
     "json2csv": "^4.5.3",
